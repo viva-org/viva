@@ -22,7 +22,11 @@ SHELL ["conda", "run", "-n", "viva", "/bin/bash", "-c"]
 # 复制应用代码
 COPY . .
 
-EXPOSE 8000
+# 下载必要的nltk数据
+RUN conda run -n viva python -c "import nltk; nltk.download('wordnet'); nltk.download('omw-1.4')"
 
-# 启动应用
+# 设置环境变量
+ENV PATH /opt/conda/envs/viva/bin:$PATH
+
+# 启动命令
 CMD ["conda", "run", "-n", "viva", "python", "app/main.py"]

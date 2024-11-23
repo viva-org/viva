@@ -24,7 +24,8 @@ COPY . .
 
 # 下载必要的nltk数据
 RUN conda run -n viva python -c "import nltk; nltk.download('wordnet'); nltk.download('omw-1.4')"
-
+# 确保pip包正确安装
+RUN conda run -n viva pip install --no-cache-dir oss2
 # 设置环境变量
 ENV PATH /opt/conda/envs/viva/bin:$PATH
 

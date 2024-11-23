@@ -18,4 +18,3 @@ EXPOSE 8000
 
 # 启动应用
 CMD ["conda", "run", "-n", "viva", "python", "app/main.py"]
-EOL

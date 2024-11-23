@@ -34,3 +34,4 @@ dependencies:
               - spacy
               - tiktoken
               - oss2
+              - google

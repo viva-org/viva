@@ -16,6 +16,22 @@ services:
       - "8000:8000"
     environment:
       - PYTHONUNBUFFERED=1
+      - DATABASE_URL=postgresql://user:password@db:5432/viva_db  # 添加数据库URL
+    depends_on:
+      - db
+    networks:
+      - viva-network
+
+  db:
+    image: postgres:14
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=viva_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
     networks:
       - viva-network
 
@@ -23,3 +39,5 @@ networks:
   viva-network:
     driver: bridge
 
+volumes:
+  postgres_data:

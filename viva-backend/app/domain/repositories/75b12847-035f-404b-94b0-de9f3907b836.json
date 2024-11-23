@@ -1,0 +1,1861 @@
+{
+  "language_code": "en_us",
+  "audio_url": "https://cdn.assemblyai.com/upload/fbb4f06c-0f8f-4e78-be71-da38f606f022",
+  "punctuate": true,
+  "format_text": true,
+  "dual_channel": false,
+  "webhook_url": null,
+  "webhook_auth_header_name": null,
+  "webhook_auth_header_value": null,
+  "audio_start_from": null,
+  "audio_end_at": null,
+  "word_boost": [],
+  "boost_param": null,
+  "filter_profanity": false,
+  "redact_pii": false,
+  "redact_pii_audio": false,
+  "redact_pii_policies": null,
+  "redact_pii_sub": null,
+  "speaker_labels": true,
+  "speakers_expected": null,
+  "content_safety": false,
+  "content_safety_confidence": null,
+  "iab_categories": true,
+  "custom_spelling": null,
+  "disfluencies": false,
+  "sentiment_analysis": false,
+  "auto_chapters": true,
+  "entity_detection": false,
+  "summarization": false,
+  "summary_model": null,
+  "summary_type": null,
+  "auto_highlights": true,
+  "language_detection": false,
+  "speech_threshold": null,
+  "id": "75b12847-035f-404b-94b0-de9f3907b836",
+  "status": "completed",
+  "error": null,
+  "text": "Um. Yeah. And you know couldn't that yeah paid going so much. We will put it. How you. Know how to yeah. And you said yeah don't. Yeah just a good rosanna massage. We are. Yeah. But yeah. We. Yeah. So yeah. Oh try to but no one. So you. But yeah the idea. Coach. Coach mesh. Santona. No SANTOLA. Yeah. But you. Samuel. Samuel. Suja. Samuel. Samuel. That is up. What you feel about rudoggineer as well. Digital. You register. This is Allah. You don't you know. Sumiya Quilla. Sarah. Jimmy sugar. Like.",
+  "words": [
+    {
+      "text": "Um.",
+      "start": 90,
+      "end": 640,
+      "confidence": 0.73087
+    },
+    {
+      "text": "Yeah.",
+      "start": 9330,
+      "end": 10080,
+      "confidence": 0.77804
+    },
+    {
+      "text": "And",
+      "start": 19090,
+      "end": 19840,
+      "confidence": 0.54
+    },
+    {
+      "text": "you",
+      "start": 21170,
+      "end": 21534,
+      "confidence": 0.49552
+    },
+    {
+      "text": "know",
+      "start": 21572,
+      "end": 22160,
+      "confidence": 0.6915
+    },
+    {
+      "text": "couldn't",
+      "start": 23170,
+      "end": 23674,
+      "confidence": 0.35181
+    },
+    {
+      "text": "that",
+      "start": 23722,
+      "end": 24320,
+      "confidence": 0.63177
+    },
+    {
+      "text": "yeah",
+      "start": 25370,
+      "end": 26120,
+      "confidence": 0.80559
+    },
+    {
+      "text": "paid",
+      "start": 26570,
+      "end": 27320,
+      "confidence": 0.477
+    },
+    {
+      "text": "going",
+      "start": 28010,
+      "end": 28374,
+      "confidence": 0.333
+    },
+    {
+      "text": "so",
+      "start": 28412,
+      "end": 28950,
+      "confidence": 0.43516
+    },
+    {
+      "text": "much.",
+      "start": 29100,
+      "end": 29800,
+      "confidence": 0.86553
+    },
+    {
+      "text": "We",
+      "start": 40010,
+      "end": 40422,
+      "confidence": 0.52363
+    },
+    {
+      "text": "will",
+      "start": 40476,
+      "end": 41080,
+      "confidence": 0.60093
+    },
+    {
+      "text": "put",
+      "start": 41690,
+      "end": 42054,
+      "confidence": 0.85295
+    },
+    {
+      "text": "it.",
+      "start": 42092,
+      "end": 42680,
+      "confidence": 0.95104
+    },
+    {
+      "text": "How",
+      "start": 46410,
+      "end": 46726,
+      "confidence": 0.57425
+    },
+    {
+      "text": "you.",
+      "start": 46748,
+      "end": 47320,
+      "confidence": 0.79078
+    },
+    {
+      "text": "Know",
+      "start": 49370,
+      "end": 49638,
+      "confidence": 0.92553
+    },
+    {
+      "text": "how",
+      "start": 49644,
+      "end": 49766,
+      "confidence": 0.64078
+    },
+    {
+      "text": "to",
+      "start": 49788,
+      "end": 50286,
+      "confidence": 1.0
+    },
+    {
+      "text": "yeah.",
+      "start": 50428,
+      "end": 50878,
+      "confidence": 0.53841
+    },
+    {
+      "text": "And",
+      "start": 50964,
+      "end": 51214,
+      "confidence": 0.94
+    },
+    {
+      "text": "you",
+      "start": 51252,
+      "end": 51358,
+      "confidence": 0.92124
+    },
+    {
+      "text": "said",
+      "start": 51364,
+      "end": 51920,
+      "confidence": 0.52388
+    },
+    {
+      "text": "yeah",
+      "start": 53890,
+      "end": 54734,
+      "confidence": 0.54903
+    },
+    {
+      "text": "don't.",
+      "start": 54932,
+      "end": 55870,
+      "confidence": 0.78174
+    },
+    {
+      "text": "Yeah",
+      "start": 60050,
+      "end": 60800,
+      "confidence": 0.63347
+    },
+    {
+      "text": "just",
+      "start": 64850,
+      "end": 65646,
+      "confidence": 0.54078
+    },
+    {
+      "text": "a",
+      "start": 65828,
+      "end": 66078,
+      "confidence": 0.4
+    },
+    {
+      "text": "good",
+      "start": 66084,
+      "end": 66158,
+      "confidence": 0.96737
+    },
+    {
+      "text": "rosanna",
+      "start": 66164,
+      "end": 66698,
+      "confidence": 0.23775
+    },
+    {
+      "text": "massage.",
+      "start": 66794,
+      "end": 67194,
+      "confidence": 0.78061
+    },
+    {
+      "text": "We",
+      "start": 67242,
+      "end": 67406,
+      "confidence": 0.58758
+    },
+    {
+      "text": "are.",
+      "start": 67428,
+      "end": 68000,
+      "confidence": 0.9719
+    },
+    {
+      "text": "Yeah.",
+      "start": 69250,
+      "end": 70000,
+      "confidence": 0.7017
+    },
+    {
+      "text": "But",
+      "start": 73890,
+      "end": 74350,
+      "confidence": 0.66908
+    },
+    {
+      "text": "yeah.",
+      "start": 74420,
+      "end": 74750,
+      "confidence": 0.52722
+    },
+    {
+      "text": "We.",
+      "start": 74820,
+      "end": 75030,
+      "confidence": 0.65438
+    },
+    {
+      "text": "Yeah.",
+      "start": 75060,
+      "end": 75640,
+      "confidence": 0.79039
+    },
+    {
+      "text": "So",
+      "start": 81210,
+      "end": 81766,
+      "confidence": 0.49383
+    },
+    {
+      "text": "yeah.",
+      "start": 81868,
+      "end": 82326,
+      "confidence": 0.93855
+    },
+    {
+      "text": "Oh",
+      "start": 82428,
+      "end": 82742,
+      "confidence": 0.8
+    },
+    {
+      "text": "try",
+      "start": 82796,
+      "end": 83014,
+      "confidence": 0.42405
+    },
+    {
+      "text": "to",
+      "start": 83052,
+      "end": 83206,
+      "confidence": 0.57
+    },
+    {
+      "text": "but",
+      "start": 83228,
+      "end": 83800,
+      "confidence": 0.94303
+    },
+    {
+      "text": "no",
+      "start": 86810,
+      "end": 87126,
+      "confidence": 0.6092
+    },
+    {
+      "text": "one.",
+      "start": 87148,
+      "end": 87382,
+      "confidence": 0.49
+    },
+    {
+      "text": "So",
+      "start": 87436,
+      "end": 87606,
+      "confidence": 0.71834
+    },
+    {
+      "text": "you.",
+      "start": 87628,
+      "end": 87718,
+      "confidence": 0.94979
+    },
+    {
+      "text": "But",
+      "start": 87724,
+      "end": 88280,
+      "confidence": 0.57173
+    },
+    {
+      "text": "yeah",
+      "start": 89610,
+      "end": 90360,
+      "confidence": 0.48404
+    },
+    {
+      "text": "the",
+      "start": 100370,
+      "end": 101120,
+      "confidence": 0.73
+    },
+    {
+      "text": "idea.",
+      "start": 108930,
+      "end": 109774,
+      "confidence": 0.73162
+    },
+    {
+      "text": "Coach.",
+      "start": 109972,
+      "end": 110570,
+      "confidence": 0.49284
+    },
+    {
+      "text": "Coach",
+      "start": 110650,
+      "end": 111002,
+      "confidence": 0.41347
+    },
+    {
+      "text": "mesh.",
+      "start": 111066,
+      "end": 116106,
+      "confidence": 0.20356
+    },
+    {
+      "text": "Santona.",
+      "start": 116298,
+      "end": 117066,
+      "confidence": 0.1639
+    },
+    {
+      "text": "No",
+      "start": 117098,
+      "end": 117680,
+      "confidence": 0.4226
+    },
+    {
+      "text": "SANTOLA.",
+      "start": 118850,
+      "end": 119870,
+      "confidence": 0.16894
+    },
+    {
+      "text": "Yeah.",
+      "start": 123810,
+      "end": 124270,
+      "confidence": 0.71799
+    },
+    {
+      "text": "But",
+      "start": 124340,
+      "end": 124960,
+      "confidence": 0.49795
+    },
+    {
+      "text": "you.",
+      "start": 125450,
+      "end": 126200,
+      "confidence": 0.56068
+    },
+    {
+      "text": "Samuel.",
+      "start": 134970,
+      "end": 135778,
+      "confidence": 0.67927
+    },
+    {
+      "text": "Samuel.",
+      "start": 135874,
+      "end": 136306,
+      "confidence": 0.66134
+    },
+    {
+      "text": "Suja.",
+      "start": 136338,
+      "end": 137190,
+      "confidence": 0.28227
+    },
+    {
+      "text": "Samuel.",
+      "start": 142890,
+      "end": 143890,
+      "confidence": 0.61161
+    },
+    {
+      "text": "Samuel.",
+      "start": 144050,
+      "end": 145030,
+      "confidence": 0.52628
+    },
+    {
+      "text": "That",
+      "start": 149450,
+      "end": 150222,
+      "confidence": 0.1772
+    },
+    {
+      "text": "is",
+      "start": 150396,
+      "end": 150782,
+      "confidence": 0.72504
+    },
+    {
+      "text": "up.",
+      "start": 150836,
+      "end": 151440,
+      "confidence": 0.67317
+    },
+    {
+      "text": "What",
+      "start": 152050,
+      "end": 152366,
+      "confidence": 0.73627
+    },
+    {
+      "text": "you",
+      "start": 152388,
+      "end": 152526,
+      "confidence": 0.58873
+    },
+    {
+      "text": "feel",
+      "start": 152548,
+      "end": 153022,
+      "confidence": 0.98831
+    },
+    {
+      "text": "about",
+      "start": 153156,
+      "end": 153502,
+      "confidence": 0.58672
+    },
+    {
+      "text": "rudoggineer",
+      "start": 153556,
+      "end": 154346,
+      "confidence": 0.16569
+    },
+    {
+      "text": "as",
+      "start": 154378,
+      "end": 154526,
+      "confidence": 0.9143
+    },
+    {
+      "text": "well.",
+      "start": 154548,
+      "end": 155120,
+      "confidence": 0.99882
+    },
+    {
+      "text": "Digital.",
+      "start": 175370,
+      "end": 176310,
+      "confidence": 0.86307
+    },
+    {
+      "text": "You",
+      "start": 176890,
+      "end": 177254,
+      "confidence": 0.82077
+    },
+    {
+      "text": "register.",
+      "start": 177292,
+      "end": 178002,
+      "confidence": 0.10412
+    },
+    {
+      "text": "This",
+      "start": 178146,
+      "end": 178406,
+      "confidence": 0.68244
+    },
+    {
+      "text": "is",
+      "start": 178428,
+      "end": 178566,
+      "confidence": 0.96531
+    },
+    {
+      "text": "Allah.",
+      "start": 178588,
+      "end": 178818,
+      "confidence": 0.68737
+    },
+    {
+      "text": "You",
+      "start": 178834,
+      "end": 179014,
+      "confidence": 0.70102
+    },
+    {
+      "text": "don't",
+      "start": 179052,
+      "end": 179206,
+      "confidence": 0.44601
+    },
+    {
+      "text": "you",
+      "start": 179228,
+      "end": 179462,
+      "confidence": 0.48475
+    },
+    {
+      "text": "know.",
+      "start": 179516,
+      "end": 180120,
+      "confidence": 0.48239
+    },
+    {
+      "text": "Sumiya",
+      "start": 184490,
+      "end": 185410,
+      "confidence": 0.02817
+    },
+    {
+      "text": "Quilla.",
+      "start": 185490,
+      "end": 186390,
+      "confidence": 0.30047
+    },
+    {
+      "text": "Sarah.",
+      "start": 188890,
+      "end": 189506,
+      "confidence": 0.22112
+    },
+    {
+      "text": "Jimmy",
+      "start": 189538,
+      "end": 189906,
+      "confidence": 0.17759
+    },
+    {
+      "text": "sugar.",
+      "start": 189938,
+      "end": 190790,
+      "confidence": 0.27783
+    },
+    {
+      "text": "Like.",
+      "start": 199890,
+      "end": 200140,
+      "confidence": 0.71676
+    }
+  ],
+  "utterances": [
+    {
+      "text": "Um.",
+      "start": 90,
+      "end": 640,
+      "confidence": 0.73087,
+      "channel": null,
+      "speaker": "A",
+      "words": [
+        {
+          "text": "Um.",
+          "start": 90,
+          "end": 640,
+          "confidence": 0.73087,
+          "channel": null,
+          "speaker": "A"
+        }
+      ]
+    },
+    {
+      "text": "Yeah. And you know couldn't that yeah paid going so much.",
+      "start": 9330,
+      "end": 29800,
+      "confidence": 0.5822654545454545,
+      "channel": null,
+      "speaker": "B",
+      "words": [
+        {
+          "text": "Yeah.",
+          "start": 9330,
+          "end": 10080,
+          "confidence": 0.77804,
+          "channel": null,
+          "speaker": "B"
+        },
+        {
+          "text": "And",
+          "start": 19090,
+          "end": 19840,
+          "confidence": 0.54,
+          "channel": null,
+          "speaker": "B"
+        },
+        {
+          "text": "you",
+          "start": 21170,
+          "end": 21534,
+          "confidence": 0.49552,
+          "channel": null,
+          "speaker": "B"
+        },
+        {
+          "text": "know",
+          "start": 21572,
+          "end": 22160,
+          "confidence": 0.6915,
+          "channel": null,
+          "speaker": "B"
+        },
+        {
+          "text": "couldn't",
+          "start": 23170,
+          "end": 23674,
+          "confidence": 0.35181,
+          "channel": null,
+          "speaker": "B"
+        },
+        {
+          "text": "that",
+          "start": 23722,
+          "end": 24320,
+          "confidence": 0.63177,
+          "channel": null,
+          "speaker": "B"
+        },
+        {
+          "text": "yeah",
+          "start": 25370,
+          "end": 26120,
+          "confidence": 0.80559,
+          "channel": null,
+          "speaker": "B"
+        },
+        {
+          "text": "paid",
+          "start": 26570,
+          "end": 27320,
+          "confidence": 0.477,
+          "channel": null,
+          "speaker": "B"
+        },
+        {
+          "text": "going",
+          "start": 28010,
+          "end": 28374,
+          "confidence": 0.333,
+          "channel": null,
+          "speaker": "B"
+        },
+        {
+          "text": "so",
+          "start": 28412,
+          "end": 28950,
+          "confidence": 0.43516,
+          "channel": null,
+          "speaker": "B"
+        },
+        {
+          "text": "much.",
+          "start": 29100,
+          "end": 29800,
+          "confidence": 0.86553,
+          "channel": null,
+          "speaker": "B"
+        }
+      ]
+    },
+    {
+      "text": "We will put it.",
+      "start": 40010,
+      "end": 42680,
+      "confidence": 0.7321375,
+      "channel": null,
+      "speaker": "A",
+      "words": [
+        {
+          "text": "We",
+          "start": 40010,
+          "end": 40422,
+          "confidence": 0.52363,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "will",
+          "start": 40476,
+          "end": 41080,
+          "confidence": 0.60093,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "put",
+          "start": 41690,
+          "end": 42054,
+          "confidence": 0.85295,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "it.",
+          "start": 42092,
+          "end": 42680,
+          "confidence": 0.95104,
+          "channel": null,
+          "speaker": "A"
+        }
+      ]
+    },
+    {
+      "text": "How you.",
+      "start": 46410,
+      "end": 47320,
+      "confidence": 0.682515,
+      "channel": null,
+      "speaker": "B",
+      "words": [
+        {
+          "text": "How",
+          "start": 46410,
+          "end": 46726,
+          "confidence": 0.57425,
+          "channel": null,
+          "speaker": "B"
+        },
+        {
+          "text": "you.",
+          "start": 46748,
+          "end": 47320,
+          "confidence": 0.79078,
+          "channel": null,
+          "speaker": "B"
+        }
+      ]
+    },
+    {
+      "text": "Know how to yeah. And you said yeah don't. Yeah just a good rosanna massage. We are.",
+      "start": 49370,
+      "end": 68000,
+      "confidence": 0.7023570588235294,
+      "channel": null,
+      "speaker": "A",
+      "words": [
+        {
+          "text": "Know",
+          "start": 49370,
+          "end": 49638,
+          "confidence": 0.92553,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "how",
+          "start": 49644,
+          "end": 49766,
+          "confidence": 0.64078,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "to",
+          "start": 49788,
+          "end": 50286,
+          "confidence": 1.0,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "yeah.",
+          "start": 50428,
+          "end": 50878,
+          "confidence": 0.53841,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "And",
+          "start": 50964,
+          "end": 51214,
+          "confidence": 0.94,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "you",
+          "start": 51252,
+          "end": 51358,
+          "confidence": 0.92124,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "said",
+          "start": 51364,
+          "end": 51920,
+          "confidence": 0.52388,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "yeah",
+          "start": 53890,
+          "end": 54734,
+          "confidence": 0.54903,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "don't.",
+          "start": 54932,
+          "end": 55870,
+          "confidence": 0.78174,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "Yeah",
+          "start": 60050,
+          "end": 60800,
+          "confidence": 0.63347,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "just",
+          "start": 64850,
+          "end": 65646,
+          "confidence": 0.54078,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "a",
+          "start": 65828,
+          "end": 66078,
+          "confidence": 0.4,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "good",
+          "start": 66084,
+          "end": 66158,
+          "confidence": 0.96737,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "rosanna",
+          "start": 66164,
+          "end": 66698,
+          "confidence": 0.23775,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "massage.",
+          "start": 66794,
+          "end": 67194,
+          "confidence": 0.78061,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "We",
+          "start": 67242,
+          "end": 67406,
+          "confidence": 0.58758,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "are.",
+          "start": 67428,
+          "end": 68000,
+          "confidence": 0.9719,
+          "channel": null,
+          "speaker": "A"
+        }
+      ]
+    },
+    {
+      "text": "Yeah.",
+      "start": 69250,
+      "end": 70000,
+      "confidence": 0.7017,
+      "channel": null,
+      "speaker": "B",
+      "words": [
+        {
+          "text": "Yeah.",
+          "start": 69250,
+          "end": 70000,
+          "confidence": 0.7017,
+          "channel": null,
+          "speaker": "B"
+        }
+      ]
+    },
+    {
+      "text": "But yeah.",
+      "start": 73890,
+      "end": 74750,
+      "confidence": 0.59815,
+      "channel": null,
+      "speaker": "A",
+      "words": [
+        {
+          "text": "But",
+          "start": 73890,
+          "end": 74350,
+          "confidence": 0.66908,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "yeah.",
+          "start": 74420,
+          "end": 74750,
+          "confidence": 0.52722,
+          "channel": null,
+          "speaker": "A"
+        }
+      ]
+    },
+    {
+      "text": "We. Yeah.",
+      "start": 74820,
+      "end": 75640,
+      "confidence": 0.722385,
+      "channel": null,
+      "speaker": "B",
+      "words": [
+        {
+          "text": "We.",
+          "start": 74820,
+          "end": 75030,
+          "confidence": 0.65438,
+          "channel": null,
+          "speaker": "B"
+        },
+        {
+          "text": "Yeah.",
+          "start": 75060,
+          "end": 75640,
+          "confidence": 0.79039,
+          "channel": null,
+          "speaker": "B"
+        }
+      ]
+    },
+    {
+      "text": "So yeah. Oh try to but no one. So you. But yeah the idea. Coach. Coach mesh. Santona.",
+      "start": 81210,
+      "end": 117066,
+      "confidence": 0.5959972222222221,
+      "channel": null,
+      "speaker": "A",
+      "words": [
+        {
+          "text": "So",
+          "start": 81210,
+          "end": 81766,
+          "confidence": 0.49383,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "yeah.",
+          "start": 81868,
+          "end": 82326,
+          "confidence": 0.93855,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "Oh",
+          "start": 82428,
+          "end": 82742,
+          "confidence": 0.8,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "try",
+          "start": 82796,
+          "end": 83014,
+          "confidence": 0.42405,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "to",
+          "start": 83052,
+          "end": 83206,
+          "confidence": 0.57,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "but",
+          "start": 83228,
+          "end": 83800,
+          "confidence": 0.94303,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "no",
+          "start": 86810,
+          "end": 87126,
+          "confidence": 0.6092,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "one.",
+          "start": 87148,
+          "end": 87382,
+          "confidence": 0.49,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "So",
+          "start": 87436,
+          "end": 87606,
+          "confidence": 0.71834,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "you.",
+          "start": 87628,
+          "end": 87718,
+          "confidence": 0.94979,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "But",
+          "start": 87724,
+          "end": 88280,
+          "confidence": 0.57173,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "yeah",
+          "start": 89610,
+          "end": 90360,
+          "confidence": 0.48404,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "the",
+          "start": 100370,
+          "end": 101120,
+          "confidence": 0.73,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "idea.",
+          "start": 108930,
+          "end": 109774,
+          "confidence": 0.73162,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "Coach.",
+          "start": 109972,
+          "end": 110570,
+          "confidence": 0.49284,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "Coach",
+          "start": 110650,
+          "end": 111002,
+          "confidence": 0.41347,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "mesh.",
+          "start": 111066,
+          "end": 116106,
+          "confidence": 0.20356,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "Santona.",
+          "start": 116298,
+          "end": 117066,
+          "confidence": 0.1639,
+          "channel": null,
+          "speaker": "A"
+        }
+      ]
+    },
+    {
+      "text": "No SANTOLA. Yeah.",
+      "start": 117098,
+      "end": 124270,
+      "confidence": 0.43651,
+      "channel": null,
+      "speaker": "B",
+      "words": [
+        {
+          "text": "No",
+          "start": 117098,
+          "end": 117680,
+          "confidence": 0.4226,
+          "channel": null,
+          "speaker": "B"
+        },
+        {
+          "text": "SANTOLA.",
+          "start": 118850,
+          "end": 119870,
+          "confidence": 0.16894,
+          "channel": null,
+          "speaker": "B"
+        },
+        {
+          "text": "Yeah.",
+          "start": 123810,
+          "end": 124270,
+          "confidence": 0.71799,
+          "channel": null,
+          "speaker": "B"
+        }
+      ]
+    },
+    {
+      "text": "But you.",
+      "start": 124340,
+      "end": 126200,
+      "confidence": 0.529315,
+      "channel": null,
+      "speaker": "A",
+      "words": [
+        {
+          "text": "But",
+          "start": 124340,
+          "end": 124960,
+          "confidence": 0.49795,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "you.",
+          "start": 125450,
+          "end": 126200,
+          "confidence": 0.56068,
+          "channel": null,
+          "speaker": "A"
+        }
+      ]
+    },
+    {
+      "text": "Samuel. Samuel. Suja.",
+      "start": 134970,
+      "end": 137190,
+      "confidence": 0.54096,
+      "channel": null,
+      "speaker": "C",
+      "words": [
+        {
+          "text": "Samuel.",
+          "start": 134970,
+          "end": 135778,
+          "confidence": 0.67927,
+          "channel": null,
+          "speaker": "C"
+        },
+        {
+          "text": "Samuel.",
+          "start": 135874,
+          "end": 136306,
+          "confidence": 0.66134,
+          "channel": null,
+          "speaker": "C"
+        },
+        {
+          "text": "Suja.",
+          "start": 136338,
+          "end": 137190,
+          "confidence": 0.28227,
+          "channel": null,
+          "speaker": "C"
+        }
+      ]
+    },
+    {
+      "text": "Samuel. Samuel.",
+      "start": 142890,
+      "end": 145030,
+      "confidence": 0.568945,
+      "channel": null,
+      "speaker": "A",
+      "words": [
+        {
+          "text": "Samuel.",
+          "start": 142890,
+          "end": 143890,
+          "confidence": 0.61161,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "Samuel.",
+          "start": 144050,
+          "end": 145030,
+          "confidence": 0.52628,
+          "channel": null,
+          "speaker": "A"
+        }
+      ]
+    },
+    {
+      "text": "That is up.",
+      "start": 149450,
+      "end": 151440,
+      "confidence": 0.5251366666666667,
+      "channel": null,
+      "speaker": "C",
+      "words": [
+        {
+          "text": "That",
+          "start": 149450,
+          "end": 150222,
+          "confidence": 0.1772,
+          "channel": null,
+          "speaker": "C"
+        },
+        {
+          "text": "is",
+          "start": 150396,
+          "end": 150782,
+          "confidence": 0.72504,
+          "channel": null,
+          "speaker": "C"
+        },
+        {
+          "text": "up.",
+          "start": 150836,
+          "end": 151440,
+          "confidence": 0.67317,
+          "channel": null,
+          "speaker": "C"
+        }
+      ]
+    },
+    {
+      "text": "What you feel about rudoggineer as well.",
+      "start": 152050,
+      "end": 155120,
+      "confidence": 0.7112628571428571,
+      "channel": null,
+      "speaker": "B",
+      "words": [
+        {
+          "text": "What",
+          "start": 152050,
+          "end": 152366,
+          "confidence": 0.73627,
+          "channel": null,
+          "speaker": "B"
+        },
+        {
+          "text": "you",
+          "start": 152388,
+          "end": 152526,
+          "confidence": 0.58873,
+          "channel": null,
+          "speaker": "B"
+        },
+        {
+          "text": "feel",
+          "start": 152548,
+          "end": 153022,
+          "confidence": 0.98831,
+          "channel": null,
+          "speaker": "B"
+        },
+        {
+          "text": "about",
+          "start": 153156,
+          "end": 153502,
+          "confidence": 0.58672,
+          "channel": null,
+          "speaker": "B"
+        },
+        {
+          "text": "rudoggineer",
+          "start": 153556,
+          "end": 154346,
+          "confidence": 0.16569,
+          "channel": null,
+          "speaker": "B"
+        },
+        {
+          "text": "as",
+          "start": 154378,
+          "end": 154526,
+          "confidence": 0.9143,
+          "channel": null,
+          "speaker": "B"
+        },
+        {
+          "text": "well.",
+          "start": 154548,
+          "end": 155120,
+          "confidence": 0.99882,
+          "channel": null,
+          "speaker": "B"
+        }
+      ]
+    },
+    {
+      "text": "Digital. You register.",
+      "start": 175370,
+      "end": 178002,
+      "confidence": 0.5959866666666667,
+      "channel": null,
+      "speaker": "A",
+      "words": [
+        {
+          "text": "Digital.",
+          "start": 175370,
+          "end": 176310,
+          "confidence": 0.86307,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "You",
+          "start": 176890,
+          "end": 177254,
+          "confidence": 0.82077,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "register.",
+          "start": 177292,
+          "end": 178002,
+          "confidence": 0.10412,
+          "channel": null,
+          "speaker": "A"
+        }
+      ]
+    },
+    {
+      "text": "This is Allah.",
+      "start": 178146,
+      "end": 178818,
+      "confidence": 0.7783733333333333,
+      "channel": null,
+      "speaker": "B",
+      "words": [
+        {
+          "text": "This",
+          "start": 178146,
+          "end": 178406,
+          "confidence": 0.68244,
+          "channel": null,
+          "speaker": "B"
+        },
+        {
+          "text": "is",
+          "start": 178428,
+          "end": 178566,
+          "confidence": 0.96531,
+          "channel": null,
+          "speaker": "B"
+        },
+        {
+          "text": "Allah.",
+          "start": 178588,
+          "end": 178818,
+          "confidence": 0.68737,
+          "channel": null,
+          "speaker": "B"
+        }
+      ]
+    },
+    {
+      "text": "You don't you know.",
+      "start": 178834,
+      "end": 180120,
+      "confidence": 0.5285425,
+      "channel": null,
+      "speaker": "A",
+      "words": [
+        {
+          "text": "You",
+          "start": 178834,
+          "end": 179014,
+          "confidence": 0.70102,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "don't",
+          "start": 179052,
+          "end": 179206,
+          "confidence": 0.44601,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "you",
+          "start": 179228,
+          "end": 179462,
+          "confidence": 0.48475,
+          "channel": null,
+          "speaker": "A"
+        },
+        {
+          "text": "know.",
+          "start": 179516,
+          "end": 180120,
+          "confidence": 0.48239,
+          "channel": null,
+          "speaker": "A"
+        }
+      ]
+    },
+    {
+      "text": "Sumiya Quilla. Sarah.",
+      "start": 184490,
+      "end": 189506,
+      "confidence": 0.18325333333333335,
+      "channel": null,
+      "speaker": "B",
+      "words": [
+        {
+          "text": "Sumiya",
+          "start": 184490,
+          "end": 185410,
+          "confidence": 0.02817,
+          "channel": null,
+          "speaker": "B"
+        },
+        {
+          "text": "Quilla.",
+          "start": 185490,
+          "end": 186390,
+          "confidence": 0.30047,
+          "channel": null,
+          "speaker": "B"
+        },
+        {
+          "text": "Sarah.",
+          "start": 188890,
+          "end": 189506,
+          "confidence": 0.22112,
+          "channel": null,
+          "speaker": "B"
+        }
+      ]
+    },
+    {
+      "text": "Jimmy sugar. Like.",
+      "start": 189538,
+      "end": 200140,
+      "confidence": 0.39072666666666667,
+      "channel": null,
+      "speaker": "C",
+      "words": [
+        {
+          "text": "Jimmy",
+          "start": 189538,
+          "end": 189906,
+          "confidence": 0.17759,
+          "channel": null,
+          "speaker": "C"
+        },
+        {
+          "text": "sugar.",
+          "start": 189938,
+          "end": 190790,
+          "confidence": 0.27783,
+          "channel": null,
+          "speaker": "C"
+        },
+        {
+          "text": "Like.",
+          "start": 199890,
+          "end": 200140,
+          "confidence": 0.71676,
+          "channel": null,
+          "speaker": "A"
+        }
+      ]
+    }
+  ],
+  "confidence": 0.6072609574468084,
+  "audio_duration": 232.0,
+  "webhook_status_code": null,
+  "webhook_auth": false,
+  "summary": null,
+  "auto_highlights_result": {
+    "status": "success",
+    "results": [
+      {
+        "count": 1,
+        "rank": 0.14,
+        "text": "Coach mesh",
+        "timestamps": [
+          {
+            "start": 110650,
+            "end": 116106
+          }
+        ]
+      },
+      {
+        "count": 1,
+        "rank": 0.14,
+        "text": "Sumiya Quilla",
+        "timestamps": [
+          {
+            "start": 184490,
+            "end": 186390
+          }
+        ]
+      },
+      {
+        "count": 1,
+        "rank": 0.14,
+        "text": "Jimmy sugar",
+        "timestamps": [
+          {
+            "start": 189538,
+            "end": 190790
+          }
+        ]
+      },
+      {
+        "count": 1,
+        "rank": 0.11,
+        "text": "rudoggineer",
+        "timestamps": [
+          {
+            "start": 153556,
+            "end": 154346
+          }
+        ]
+      },
+      {
+        "count": 1,
+        "rank": 0.04,
+        "text": "Santona",
+        "timestamps": [
+          {
+            "start": 116298,
+            "end": 117066
+          }
+        ]
+      },
+      {
+        "count": 1,
+        "rank": 0.04,
+        "text": "SANTOLA",
+        "timestamps": [
+          {
+            "start": 118850,
+            "end": 119870
+          }
+        ]
+      },
+      {
+        "count": 4,
+        "rank": 0.04,
+        "text": "Samuel",
+        "timestamps": [
+          {
+            "start": 134970,
+            "end": 135778
+          },
+          {
+            "start": 135874,
+            "end": 136306
+          },
+          {
+            "start": 142890,
+            "end": 143890
+          },
+          {
+            "start": 144050,
+            "end": 145030
+          }
+        ]
+      },
+      {
+        "count": 1,
+        "rank": 0.04,
+        "text": "Suja",
+        "timestamps": [
+          {
+            "start": 136338,
+            "end": 137190
+          }
+        ]
+      },
+      {
+        "count": 1,
+        "rank": 0.04,
+        "text": "Digital",
+        "timestamps": [
+          {
+            "start": 175370,
+            "end": 176310
+          }
+        ]
+      },
+      {
+        "count": 1,
+        "rank": 0.04,
+        "text": "Allah",
+        "timestamps": [
+          {
+            "start": 178588,
+            "end": 178818
+          }
+        ]
+      },
+      {
+        "count": 1,
+        "rank": 0.04,
+        "text": "Sarah",
+        "timestamps": [
+          {
+            "start": 188890,
+            "end": 189506
+          }
+        ]
+      },
+      {
+        "count": 1,
+        "rank": 0.02,
+        "text": "idea",
+        "timestamps": [
+          {
+            "start": 108930,
+            "end": 109774
+          }
+        ]
+      },
+      {
+        "count": 1,
+        "rank": 0.02,
+        "text": "but no one",
+        "timestamps": [
+          {
+            "start": 83228,
+            "end": 87382
+          }
+        ]
+      }
+    ]
+  },
+  "content_safety_labels": null,
+  "iab_categories_result": {
+    "status": "success",
+    "results": [
+      {
+        "text": "Um yeah. And you know couldn't that yeah paid going so much. We will put it how you know how to yeah. And you said yeah don't. Yeah just a good rosanna massage. We are. Yeah. But yeah. We. Yeah. So yeah. Oh try to but no one. So you. But yeah the idea. Coach. Coach mesh. Santona. No SANTOLA. Yeah. But you samuel. Samuel. Suja. Samuel. Samuel. That is up.",
+        "labels": [
+          {
+            "relevance": 0.7733604311943054,
+            "label": "HealthyLiving>Wellness>AlternativeMedicine>HolisticHealth"
+          },
+          {
+            "relevance": 0.7494900226593018,
+            "label": "HealthyLiving>Wellness>PhysicalTherapy"
+          },
+          {
+            "relevance": 0.3698049485683441,
+            "label": "HealthyLiving>Wellness>AlternativeMedicine"
+          },
+          {
+            "relevance": 0.10842528939247131,
+            "label": "Travel>TravelType>Spas"
+          },
+          {
+            "relevance": 0.004068448673933744,
+            "label": "HealthyLiving>Wellness"
+          },
+          {
+            "relevance": 0.0009957625297829509,
+            "label": "HealthyLiving"
+          },
+          {
+            "relevance": 0.0009797010570764542,
+            "label": "MedicalHealth"
+          },
+          {
+            "relevance": 0.0008086582529358566,
+            "label": "HealthyLiving>Wellness>AlternativeMedicine>HerbsAndSupplements"
+          },
+          {
+            "relevance": 0.0006305781425908208,
+            "label": "MedicalHealth>DiseasesAndConditions>SkinAndDermatology"
+          },
+          {
+            "relevance": 0.0006297807558439672,
+            "label": "HealthyLiving>FitnessAndExercise"
+          }
+        ],
+        "timestamp": {
+          "start": 90,
+          "end": 151440
+        }
+      },
+      {
+        "text": "What you feel about rudoggineer as well. Digital. You register. This is Allah. You don't you know Sumiya Quilla. Sarah. Jimmy sugar. Like.",
+        "labels": [
+          {
+            "relevance": 0.7983331680297852,
+            "label": "Hobbies&Interests>ContentProduction"
+          },
+          {
+            "relevance": 0.039218053221702576,
+            "label": "Technology&Computing>Computing>Internet>InternetForBeginners"
+          },
+          {
+            "relevance": 0.036755409091711044,
+            "label": "Technology&Computing>Computing>Internet>SocialNetworking"
+          },
+          {
+            "relevance": 0.028784066438674927,
+            "label": "Technology&Computing"
+          },
+          {
+            "relevance": 0.02358200028538704,
+            "label": "FineArt>DigitalArts"
+          },
+          {
+            "relevance": 0.01852233335375786,
+            "label": "FamilyAndRelationships>Parenting>InternetSafety"
+          },
+          {
+            "relevance": 0.007690459955483675,
+            "label": "BusinessAndFinance>Industries>InformationServicesIndustry"
+          },
+          {
+            "relevance": 0.005789447575807571,
+            "label": "Religion&Spirituality>Islam"
+          },
+          {
+            "relevance": 0.00577882444486022,
+            "label": "Education>OnlineEducation"
+          },
+          {
+            "relevance": 0.005027354694902897,
+            "label": "Technology&Computing>Computing>Internet>ITAndInternetSupport"
+          }
+        ],
+        "timestamp": {
+          "start": 152050,
+          "end": 200140
+        }
+      }
+    ],
+    "summary": {
+      "Hobbies&Interests>ContentProduction": 1.0,
+      "HealthyLiving>Wellness>AlternativeMedicine>HolisticHealth": 0.9690492153167725,
+      "HealthyLiving>Wellness>PhysicalTherapy": 0.9388124346733093,
+      "HealthyLiving>Wellness>AlternativeMedicine": 0.4636894464492798,
+      "Travel>TravelType>Spas": 0.13585105538368225,
+      "Technology&Computing>Computing>Internet>InternetForBeginners": 0.04924705624580383,
+      "Technology&Computing>Computing>Internet>SocialNetworking": 0.046050116419792175,
+      "Technology&Computing": 0.03606712818145752,
+      "FineArt>DigitalArts": 0.02960910275578499,
+      "FamilyAndRelationships>Parenting>InternetSafety": 0.02325413003563881,
+      "BusinessAndFinance>Industries>InformationServicesIndustry": 0.00964139774441719,
+      "Education>OnlineEducation": 0.007278078701347113,
+      "Religion&Spirituality>Islam": 0.007275883574038744,
+      "Technology&Computing>Computing>Internet>ITAndInternetSupport": 0.006323786918073893,
+      "HealthyLiving>Wellness": 0.005161986220628023,
+      "Technology&Computing>Computing>Internet": 0.00360279344022274,
+      "BusinessAndFinance>Industries>TechnologyIndustry": 0.003060913411900401,
+      "VideoGaming>VideoGameGenres>MMOs": 0.0019766788464039564,
+      "BusinessAndFinance>Industries>MediaIndustry": 0.001866489532403648,
+      "Religion&Spirituality>Spirituality": 0.0018330567982047796
+    }
+  },
+  "chapters": [
+    {
+      "summary": "Um. How you. Know how to. And you said yeah don't. Yeah just a good rosanna massage. Sumiya Quilla. Sarah. Jimmy sugar. Samuel. Suja. Digital. What you feel about rudoggineer as well.",
+      "headline": "Samuel: Yeah just a good rosanna massage",
+      "gist": "How to get a rosanna massage",
+      "start": 90,
+      "end": 200140
+    }
+  ],
+  "sentiment_analysis_results": null,
+  "entities": null
+}

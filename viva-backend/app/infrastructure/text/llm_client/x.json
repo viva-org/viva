@@ -1,0 +1,55 @@
+{
+  "properties": {
+    "Suggestion": {
+      "title": "Suggestion",
+      "description": "\u5bf9\u6bcf\u4e00\u8f6e\u5bf9\u8bdd\u7684\u4fee\u6539\u548c\u6807\u8bb0",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Revision"
+      }
+    }
+  },
+  "required": [
+    "Suggestion"
+  ],
+  "definitions": {
+    "Revision": {
+      "title": "Revision",
+      "type": "object",
+      "properties": {
+        "Round": {
+          "title": "Round",
+          "description": "\u5bf9\u8bdd\u8f6e\u6570",
+          "type": "string"
+        },
+        "speaker_A": {
+          "title": "Speaker A",
+          "description": "speaker A \u7684\u539f\u8868\u8fbe",
+          "type": "string"
+        },
+        "speaker_B": {
+          "title": "Speaker B",
+          "description": "speaker B \u7684\u539f\u8868\u8fbe",
+          "type": "string"
+        },
+        "authentic_expression": {
+          "title": "Authentic Expression",
+          "description": "\u4f60\u63d0\u4f9b\u7684authentic expression",
+          "type": "string"
+        },
+        "tags": {
+          "title": "Tags",
+          "description": "{\n                                            CORRECT\n                                            POLITENESS_USAGE \n                                            SENTENCE_STRUCTURE_ERROR \n                                            WORD_USAGE_ERROR \n                                            SENTENCE_SEQUENCE_ERROR\n                                            TENSE_ERROR\n                                            VOICE_ERROR\n                                            MODAL_VERB_ERROR \n                                            PRONOUN_AGREEMENT_ERROR \n                                            GRAMMAR\n                                            VOCABULARY\n                                            CLARITY_AND_FLUENCY\n                                        }\u8fd9\u4e9b\u4e2d\u7684\u4e00\u4e2a\u6216\u8005\u591a\u4e2a",
+          "type": "string"
+        }
+      },
+      "required": [
+        "Round",
+        "speaker_A",
+        "speaker_B",
+        "authentic_expression",
+        "tags"
+      ]
+    }
+  }
+}

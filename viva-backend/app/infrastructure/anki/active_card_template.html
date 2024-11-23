@@ -1,0 +1,246 @@
+<!-- 正面 -->
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anki-style Translation Card</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Text:wght@400;500;600&display=swap');
+
+    :root {
+      --apple-red: #ff3b30;
+      --apple-green: #34c759;
+      --apple-light-red: #fef0f0;
+      --apple-light-green: #f0faf0;
+    }
+
+    body {
+      background-color: #f2f2f7;
+      color: #1c1c1e;
+      font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.5;
+      padding: 20px;
+    }
+
+    .anki-container {
+      max-width: 600px;
+      margin: 0 auto;
+      display: grid;
+      gap: 20px;
+    }
+
+    .card {
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      padding: 20px;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+    }
+
+    .context {
+      font-size: 17px;
+      margin-bottom: 15px;
+    }
+
+    .error-translation {
+      background-color: var(--apple-light-red);
+      border-radius: 8px;
+      padding: 12px;
+    }
+
+    .error-translation p {
+      color: var(--apple-red);
+      margin: 0;
+      font-size: 15px;
+    }
+
+    .input-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #6e6e73;
+      margin-bottom: 8px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px 12px 12px 16px;
+      border: 1px solid #c5c5c7;
+      border-radius: 8px;
+      font-size: 17px;
+      transition: border-color 0.3s ease;
+      box-sizing: border-box;
+      line-height: 1.4;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #0071e3;
+      box-shadow: 0 0 0 3px rgba(0,113,227,0.1);
+    }
+
+    .comparison-card {
+      display: none;
+      /* 移除背景颜色 */
+    }
+
+    .comparison-card h3 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-top: 0;
+      margin-bottom: 15px;
+    }
+
+    #comparisonText {
+      font-size: 19px;
+    }
+
+    #comparisonText .correct {
+      color: var(--apple-green);
+    }
+
+    #comparisonText .incorrect {
+      color: var(--apple-red);
+      text-decoration: line-through;
+    }
+
+    .copyright {
+      font-size: 12px;
+      color: #6e6e73;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="anki-container">
+    <div class="card context-card">
+      <p class="context">{{context}}</p>
+      <div class="error-translation">
+        <p>错误翻译：{{incorrect_translation}}</p>
+      </div>
+    </div>
+
+    <div class="card input-card">
+      <input type="text" id="userInput" placeholder="在此处输入正确的翻译...">
+    </div>
+
+    <div id="comparisonResult" class="card comparison-card">
+      <h3>比较结果</h3>
+      <p id="comparisonText"></p>
+    </div>
+  </div>
+
+  <script>
+    var isFrontSide = true; // 标识当前为正面
+
+    window.onload = function() {
+      // 检查是否是新卡片
+      if (localStorage.getItem('context') !== '{{context}}') {
+        localStorage.setItem('context', '{{context}}');
+        localStorage.removeItem('userInputValue');
+      }
+      // 设置输入框的值
+      document.querySelector('.card.input-card #userInput').value = localStorage.getItem('userInputValue') || '';
+    };
+
+    // 监听输入变化，存储到 localStorage
+    document.querySelector('.card.input-card #userInput').addEventListener('input', function(e) {
+      localStorage.setItem('userInputValue', e.target.value);
+    });
+
+    // 添加对回车键的监听，触发显示答案
+    document.querySelector('.card.input-card #userInput').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.keyCode === 13) {
+        // 阻止默认行为（如提交表单）
+        e.preventDefault();
+
+        // 使用 Anki 的 pycmd 函数触发显示答案
+        if (typeof pycmd !== 'undefined') {
+          pycmd('ans');
+        }
+      }
+    });
+
+    // 确保在 DOM 加载完成后设置焦点
+    function focusUserInput() {
+      var inputElement = document.getElementById('userInput');
+      if (inputElement) {
+        inputElement.focus();
+      }
+    }
+    // 使用 setTimeout 延迟执行，仅在正面设置焦点
+    if (typeof isFrontSide !== 'undefined' && isFrontSide) {
+      setTimeout(focusUserInput, 100);
+    }
+
+    // Anki 会在显示答案时调用这个函数
+    function onShowAnswer() {
+      var correctAnswer = '{{correct_translation}}';
+      var userAnswer = localStorage.getItem('userInputValue') || '';
+      var comparison = compareAnswers(userAnswer, correctAnswer);
+
+      // 显示比较结果
+      document.getElementById('comparisonText').innerHTML = comparison.resultHTML;
+
+      // 设置比较卡片的背景颜色
+      var comparisonCard = document.getElementById('comparisonResult');
+      if (comparison.isCompletelyCorrect) {
+        // 完全正确，显示苹果经典绿色
+        comparisonCard.style.backgroundColor = 'var(--apple-light-green)';
+      } else {
+        // 不完全正确，显示与错误翻译相同的红色
+        comparisonCard.style.backgroundColor = 'var(--apple-light-red)';
+      }
+
+      // 隐藏输入卡片，显示比较卡片
+      document.querySelector('.card.input-card').style.display = 'none';
+      comparisonCard.style.display = 'block';
+
+      // 清除存储的输入值
+      localStorage.removeItem('userInputValue');
+    }
+
+    function compareAnswers(userAnswer, correctAnswer) {
+      var userWords = userAnswer.trim().split(/\s+/);
+      var correctWords = correctAnswer.trim().split(/\s+/);
+      var result = '';
+      var isCompletelyCorrect = true;
+
+      for (var i = 0; i < Math.max(userWords.length, correctWords.length); i++) {
+        if (i < userWords.length && i < correctWords.length) {
+          if (userWords[i].toLowerCase() === correctWords[i].toLowerCase()) {
+            result += '<span class="correct">' + correctWords[i] + '</span> ';
+          } else {
+            result += '<span class="incorrect">' + userWords[i] + '</span> ';
+            result += '<span class="correct">' + correctWords[i] + '</span> ';
+            isCompletelyCorrect = false;
+          }
+        } else if (i < userWords.length) {
+          result += '<span class="incorrect">' + userWords[i] + '</span> ';
+          isCompletelyCorrect = false;
+        } else {
+          result += '<span class="correct">' + correctWords[i] + '</span> ';
+          isCompletelyCorrect = false;
+        }
+      }
+
+      return {
+        resultHTML: result,
+        isCompletelyCorrect: isCompletelyCorrect
+      };
+    }
+  </script>
+</body>
+</html>
+
+{{FrontSide}}
+<script>
+  isFrontSide = false; // 标识当前为背面
+  onShowAnswer(); // 显示答案
+</script>

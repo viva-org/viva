@@ -1,0 +1,29 @@
+# Task Description
+
+『{sentence}』
+
+把上面这个中文句子翻译成英文，并做分词处理， 尽可能分的细一些，可以参考中文对应的词能反映的英文长度，
+注意，对于
+1. 对于动词来说 to 和 be 的各种 was were are 等形式，可以忽略掉，不出现在分词结果中
+2. 对于介词，连词，助词等，可以忽略掉，不出现在分词结果中
+3. the 这种词，可以忽略掉，不出现在分词结果中
+4. not 这种词，可以忽略掉，不出现在分词结果中
+5. 一些极为常见的短语，比如 believe in 不要分成两个词
+
+
+最终输出下面的 json 结果
+
+# Output Schema
+```json
+{
+  "original": "原中文句子",
+  "translation": "Natural English translation",
+  "words": [
+    {
+      "english": "English segment (following English word order)",
+    }
+  ]
+}
+```
+
+

@@ -1,0 +1,6 @@
+
+you need to transform these original words ：`{words}` to the form 
+as the pattern '{ref_word_lemma}' -> '{ref_word_transformation}'.
+请用以下格式返回：
+{format_instructions} 
+

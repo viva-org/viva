@@ -1,0 +1,8 @@
+对于输入的内容：{process2_result}
+
+请将中文句子中的每个词的chinese字段在original字段中的对应位置的start index 找出，
+将 start 和这chinese 字段的长度 len 填入返回结果中，当你统计 index 的时候，按照
+CS 的习惯，把 original 视为一个从 0 开始的数组，标点符号也要计算在内
+
+请用以下格式返回：
+{format_instructions}   

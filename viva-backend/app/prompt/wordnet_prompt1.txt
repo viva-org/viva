@@ -1,0 +1,13 @@
+according to the real meaning of the word : `{word} ` in the context:` {context}`, 
+choose the most suitable WordNet synset from the synsets: `{synsets}`,
+notice that the definition means the meaning of the synset, you need to match it with the real meaning of the word in the context
+some special situations, the word in the sentence maybe close to not just one synset
+, you can choose all the synsets that match the word in the sentence, 
+and return the synset names, but it is not usually the case
+anyway, you can give me not just one synset name in the response
+but in most cases, you should only return one synset name in the response
+it depends on the context and your judgement according to the definition of the synsets and your 
+language understanding ability
+
+your response should be like this:
+{format_instructions}   

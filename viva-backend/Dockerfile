@@ -16,5 +16,6 @@ COPY . .
 
 EXPOSE 8000
 
-# 启动应用（确保您的后端应用监听在 8080 端口）
+# 启动应用
 CMD ["conda", "run", "-n", "viva", "python", "app/main.py"]
+EOL

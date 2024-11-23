@@ -33,3 +33,4 @@ dependencies:
               - python-telegram-bot
               - spacy
               - tiktoken
+              - oss2

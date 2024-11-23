@@ -20,13 +20,13 @@ const routes = [
     ]
   },
   // 第二类型的布局
-  {
-    path: '/login',
-    component: () => import('@/layouts/AuthLayout.vue'),
-    children: [
-
-    ]
-  }
+  // {
+  //   path: '/login',
+  //   component: () => import('@/layouts/AuthLayout.vue'),
+  //   children: [
+  //
+  //   ]
+  // }
 ]
 
 const router = createRouter({

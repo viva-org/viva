@@ -29,8 +29,11 @@ RUN conda run -n viva pip install --no-cache-dir oss2
 # 设置环境变量
 ENV PATH /opt/conda/envs/viva/bin:$PATH
 
-# 安装额外的 pip 包
-RUN conda run -n viva pip install --no-cache-dir elevenlabs
+# 安装额外的 pip 包并打印安装结果
+RUN echo "Installing elevenlabs..." && \
+    conda run -n viva pip install --no-cache-dir elevenlabs && \
+    echo "Checking installed packages:" && \
+    conda run -n viva pip list | grep elevenlabs
 
 # 启动命令
 CMD ["conda", "run", "-n", "viva", "python", "app/main.py"]

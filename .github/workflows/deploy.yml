@@ -59,7 +59,7 @@ jobs:
           
       # 2. 复制文件到服务器
       - name: Copy project files
-        uses: appleboy/scp-action@master
+        uses: appleboy/scp-action@master  # scp-action代表能复制文件到服务器
         with:
           host: ${{ secrets.SERVER_B_HOST }}
           username: ${{ secrets.SERVER_B_USERNAME }}
@@ -70,7 +70,7 @@ jobs:
 
       # 3. SSH 部署
       - name: Deploy to Server B
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@master   # ssh-action代表能上服务器做操作
         with:
           host: ${{ secrets.SERVER_B_HOST }}
           username: ${{ secrets.SERVER_B_USERNAME }}

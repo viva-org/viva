@@ -15,8 +15,12 @@ services:
       - viva-network
 
   backend:
-    build: ./viva-backend
+    build: 
+      context: ./viva-backend
+      dockerfile: Dockerfile
     image: louisleonard/viva-backend:${TAG:-latest}
+    volumes:
+      - ./viva-backend/.env:/app/viva-backend/.env  # 映射到容器内相同的相对路径
     ports:
       - "8000:8000"
     environment:

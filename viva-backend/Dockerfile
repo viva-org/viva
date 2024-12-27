@@ -30,10 +30,10 @@ RUN conda run -n viva pip install --no-cache-dir oss2
 ENV PATH /opt/conda/envs/viva/bin:$PATH
 
 # 安装额外的 pip 包并打印安装结果
-RUN echo "Installing elevenlabs..." && \
-    conda run -n viva pip install --no-cache-dir elevenlabs google && \
-    echo "Checking installed packages:" && \
-    conda run -n viva pip list | grep elevenlabs
+RUN echo "Installing packages..." && \
+    conda run -n viva pip install --no-cache-dir elevenlabs google-auth && \
+    echo "Checking installed packages:" && \    
+    conda run -n viva pip list | grep -E 'elevenlabs|google-auth'
 
 # 启动命令
 CMD ["conda", "run", "-n", "viva", "python", "app/main.py"]

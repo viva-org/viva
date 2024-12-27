@@ -36,6 +36,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Enable BuildKit  # BuildKit 是 Docker 的新一代构建引擎，提供了许多优化，能更快构建
+        run: |
+          # 启用 BuildKit
+          echo "DOCKER_BUILDKIT=1" >> $GITHUB_ENV
+          echo "COMPOSE_DOCKER_CLI_BUILD=1" >> $GITHUB_ENV
+
       - name: Build and push Docker images
         run: |
           docker-compose build

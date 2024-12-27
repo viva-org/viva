@@ -78,7 +78,7 @@ jobs:
           script: |
             echo "Starting deployment..."
             
-            # 创建目录（如果不存在）
+            # 创建目录
             echo "Creating directory..."
             mkdir -p /home/lighthouse/viva
             

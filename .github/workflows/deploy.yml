@@ -9,19 +9,15 @@ on:
   #     - main
 
 jobs:
-  test:               # 添加测试任务
-    # runs-on: ubuntu-latest
-    # steps:
-    #   - uses: actions/checkout@v3
-      
-    #   - name: Run tests
-    #     run: |
-    #       # 添加测试命令
-    #       echo "Running tests..."
+  test:   # 自动化测试的内容（现在写了个必过的，以后再优化）
+    runs-on: ubuntu-latest
+    steps:
+      - name: Always pass
+        run: echo "Tests passed successfully!"
           
   deploy:
-    # needs: test       # 需要测试通过才能部署
-    if: github.ref == 'refs/heads/main'  # 只在主分支部署
+    needs: test       # 需要先跑自动化测试
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     
     steps:

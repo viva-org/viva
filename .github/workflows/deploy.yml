@@ -58,6 +58,11 @@ jobs:
           username: ${{ secrets.SERVER_B_USERNAME }}
           password: ${{ secrets.SERVER_B_PASSWORD }}
           script: |
+            # 先安装 Docker Compose
+            sudo curl -L "https://github.com/docker/compose/releases/download/v2.24.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+            sudo chmod +x /usr/local/bin/docker-compose
+            
+            # 然后执行部署命令
             cd /home/your-username/viva
             docker-compose pull
             docker-compose down

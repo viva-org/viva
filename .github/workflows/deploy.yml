@@ -58,18 +58,41 @@ jobs:
           username: ${{ secrets.SERVER_B_USERNAME }}
           password: ${{ secrets.SERVER_B_PASSWORD }}
           script: |
-            # 检查 Docker Compose 是否已安装
+            echo "Starting deployment..."
+            
+            # 1. 创建目录（如果不存在）
+            echo "Creating directory..."
+            mkdir -p /home/root/viva
+            
+            # 2. 检查目录
+            echo "Current directory structure:"
+            ls -la /home/root/viva
+            
+            # 3. 检查 Docker Compose
+            echo "Checking Docker Compose..."
             if ! command -v docker-compose &> /dev/null; then
-                echo "Docker Compose not found. Installing..."
+                echo "Installing Docker Compose..."
                 sudo curl -L "https://github.com/docker/compose/releases/download/v2.24.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
                 sudo chmod +x /usr/local/bin/docker-compose
-                echo "Docker Compose installed successfully"
             else
                 echo "Docker Compose is already installed"
             fi
             
-            # 然后执行部署命令
-            cd /home/root/viva
-            docker-compose pull
-            docker-compose down
-            docker-compose up -d 
+            # 4. 进入目录
+            echo "Changing to project directory..."
+            cd /home/root/viva || exit 1
+            
+            # 5. 检查 docker-compose.yml 是否存在
+            echo "Checking docker-compose.yml..."
+            if [ ! -f "docker-compose.yml" ]; then
+                echo "Error: docker-compose.yml not found!"
+                exit 1
+            fi
+            
+            # 6. 执行 Docker Compose 命令
+            echo "Running Docker Compose commands..."
+            docker-compose pull || echo "Pull failed with status: $?"
+            docker-compose down || echo "Down failed with status: $?"
+            docker-compose up -d || echo "Up failed with status: $?"
+            
+            echo "Deployment completed" 

@@ -3,6 +3,7 @@ version: '3'
 services:
   frontend:
     build: ./viva-frontend
+    image: louisleonard/viva-frontend:${TAG:-latest}
     ports:
       - "80:80"
       - "443:443"  # 添加这行
@@ -15,10 +16,11 @@ services:
 
   backend:
     build: ./viva-backend
+    image: louisleonard/viva-backend:${TAG:-latest}
     ports:
       - "8000:8000"
     environment:
-      - PYTHONUNBUFFERED=1
+      - NODE_ENV=${NODE_ENV:-production}
       - DATABASE_URL=postgresql://user:password@db:5432/viva_db  # 添加数据库URL
     depends_on:
       - db

@@ -1,0 +1,65 @@
+name: Deploy Viva Project
+
+on:
+  push:
+    branches:
+      - main          # 生产环境部署
+  # pull_request:       # 添加 PR 触发器
+  #   branches:
+  #     - main
+
+jobs:
+  test:               # 添加测试任务
+    # runs-on: ubuntu-latest
+    # steps:
+    #   - uses: actions/checkout@v3
+      
+    #   - name: Run tests
+    #     run: |
+    #       # 添加测试命令
+    #       echo "Running tests..."
+          
+  deploy:
+    # needs: test       # 需要测试通过才能部署
+    if: github.ref == 'refs/heads/main'  # 只在主分支部署
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to Docker Hub  # 如果你使用 Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Docker images
+        run: |
+          docker-compose build
+          docker-compose push
+
+      - name: Copy docker-compose and config files
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SERVER_B_HOST }}
+          username: ${{ secrets.SERVER_B_USERNAME }}
+          password: ${{ secrets.SERVER_B_PASSWORD }}
+          source: "docker-compose.yml,ssl/,viva-frontend/nginx.conf"
+          target: "/home/your-username/viva"
+          strip_components: 0
+
+      - name: Deploy to Server B
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_B_HOST }}
+          username: ${{ secrets.SERVER_B_USERNAME }}
+          password: ${{ secrets.SERVER_B_PASSWORD }}
+          script: |
+            cd /home/your-username/viva
+            docker-compose pull
+            docker-compose down
+            docker-compose up -d 

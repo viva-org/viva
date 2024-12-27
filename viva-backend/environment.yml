@@ -35,3 +35,4 @@ dependencies:
               - tiktoken
               - oss2
               - google
+              - elevenlabs

@@ -20,7 +20,7 @@ services:
       dockerfile: Dockerfile
     image: louisleonard/viva-backend:${TAG:-latest}
     volumes:
-      - ./viva-backend/.env:/app/viva-backend/.env  # 映射到容器内相同的相对路径
+      - ./viva-backend/.env:/app/.env  # 把.env里的api key 挂载进容器中,因为这些 key 无法通过 github 传送
     ports:
       - "8000:8000"
     environment:

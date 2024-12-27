@@ -9,7 +9,7 @@ on:
   #     - main
 
 jobs:
-  test:   # 自动化测试的内容（现在写了个必过的，以后再优化）
+  test:   # 自动化测试的内容（现在写了个必过的，以后再优化下）
     runs-on: ubuntu-latest
     steps:
       - name: Always pass

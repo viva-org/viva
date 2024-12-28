@@ -31,7 +31,7 @@ ENV PATH /opt/conda/envs/viva/bin:$PATH
 
 # 安装额外的 pip 包并打印安装结果
 RUN echo "Installing packages..." && \
-    conda run -n viva pip install --no-cache-dir elevenlabs google-auth && \
+    conda run -n viva pip install --no-cache-dir elevenlabs google-auth google-auth-oauthlib && \
     echo "Checking installed packages:" && \    
     conda run -n viva pip list | grep -E 'elevenlabs|google-auth'
 

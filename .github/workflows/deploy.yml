@@ -83,46 +83,22 @@ jobs:
           password: ${{ secrets.SERVER_B_PASSWORD }}
           script: |
             echo "Starting deployment..."
+            cd /home/lighthouse/viva
             
-            # 创建目录（如果不存在）
-            echo "Creating directory..."
-            mkdir -p /home/lighthouse/viva
+            # 强制重新构建后端容器
+            echo "Rebuilding backend container..."
+            docker-compose build --no-cache backend
             
-            # 检查目录内容
-            echo "Checking directory contents..."
-            ls -la /home/lighthouse/viva
+            # 停止旧容器
+            echo "Stopping old containers..."
+            docker-compose down
             
-            # 检查 Docker Compose
-            echo "Checking Docker Compose..."
-            if ! command -v docker-compose &> /dev/null; then
-                echo "Installing Docker Compose..."
-                sudo curl -L "https://github.com/docker/compose/releases/download/v2.24.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-                sudo chmod +x /usr/local/bin/docker-compose
-            else
-                echo "Docker Compose is already installed"
-            fi
+            # 启动新容器
+            echo "Starting new containers..."
+            docker-compose up -d
             
-            # 进入项目目录
-            echo "Changing to project directory..."
-            cd /home/lighthouse/viva || exit 1
-            
-            # 检查文件
-            echo "Listing all files in project directory:"
-            ls -la
-            
-            # 检查 docker-compose.yml 内容
-            echo "Checking docker-compose.yml content:"
-            cat docker-compose.yml || echo "File not found!"
-            
-            # 执行部署
-            if [ -f "docker-compose.yml" ]; then
-                echo "Running Docker Compose commands..."
-                docker-compose pull || echo "Pull failed with status: $?"
-                docker-compose down || echo "Down failed with status: $?"
-                docker-compose up -d || echo "Up failed with status: $?"
-            else
-                echo "Error: docker-compose.yml not found!"
-                exit 1
-            fi
+            # 检查后端容器日志
+            echo "Checking backend logs..."
+            docker logs viva-backend-1
             
             echo "Deployment completed" 

@@ -34,9 +34,9 @@ services:
   db:
     image: postgres:14
     environment:
-      - POSTGRES_USER=user
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=viva_db
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=root
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:

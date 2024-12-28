@@ -36,3 +36,5 @@ dependencies:
               - oss2
               - google
               - elevenlabs
+              - PyJWT
+              - google-auth

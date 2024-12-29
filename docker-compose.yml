@@ -28,7 +28,6 @@ services:
     networks:
       - viva-network
 
-
 networks:
   viva-network:
     driver: bridge

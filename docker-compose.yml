@@ -25,8 +25,12 @@ services:
       - "8000:8000"
     environment:
       - NODE_ENV=${NODE_ENV:-production}
+      - DATABASE_URL=postgresql://user:password@db:5432/viva_db  # 添加数据库URL
+    depends_on:
+      - db
     networks:
       - viva-network
+
 
 networks:
   viva-network:

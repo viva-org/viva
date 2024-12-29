@@ -2,38 +2,22 @@ FROM continuumio/miniconda3:latest
 
 WORKDIR /app
 
-# 安装系统依赖
+# 复制预下载的 NLTK 数据
+COPY nltk_data /root/nltk_data
+
+# 合并 RUN 命令减少层数
 RUN apt-get update && \
-    apt-get install -y \
-    pkg-config \
-    default-libmysqlclient-dev \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
+    apt-get install -y pkg-config default-libmysqlclient-dev build-essential && \
+    rm -rf /var/lib/apt/lists/* && \
+    # 创建环境并安装依赖
+    conda env create -f environment.yml
 
-# 复制环境文件
-COPY environment.yml .
-
-# 创建 conda 环境
-RUN conda env create -f environment.yml
-
-# 激活环境
-SHELL ["conda", "run", "-n", "viva", "/bin/bash", "-c"]
+# 设置环境变量
+ENV PATH /opt/conda/envs/viva/bin:$PATH
+ENV NLTK_DATA /root/nltk_data
 
 # 复制应用代码
 COPY . .
-
-# 下载必要的nltk数据
-RUN conda run -n viva python -c "import nltk; nltk.download('wordnet'); nltk.download('omw-1.4')"
-# 确保pip包正确安装
-RUN conda run -n viva pip install --no-cache-dir oss2
-# 设置环境变量
-ENV PATH /opt/conda/envs/viva/bin:$PATH
-
-# 安装额外的 pip 包并打印安装结果
-RUN echo "Installing packages..." && \
-    conda run -n viva pip install --no-cache-dir elevenlabs google-auth google-auth-oauthlib && \
-    echo "Checking installed packages:" && \    
-    conda run -n viva pip list | grep -E 'elevenlabs|google-auth'
 
 # 启动命令
 CMD ["conda", "run", "-n", "viva", "python", "app/main.py"]

@@ -18,6 +18,10 @@ services:
     build: 
       context: ./viva-backend
       dockerfile: Dockerfile
+      args:
+        DOCKER_BUILDKIT: 1  # 启用 BuildKit 以提升构建性能
+      # 可选：添加构建超时
+      # timeout: 1800
     image: louisleonard/viva-backend:${TAG:-latest}
     volumes:
       - ./viva-backend/.env:/app/.env  # 把.env里的api key 挂载进容器中,因为这些 key 无法通过 github 传送

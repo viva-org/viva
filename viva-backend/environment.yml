@@ -38,3 +38,4 @@ dependencies:
               - elevenlabs
               - PyJWT
               - google-auth
+              - google-auth-oauthlib

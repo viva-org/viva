@@ -16,7 +16,7 @@ jobs:
         run: echo "Tests passed successfully!"
           
   deploy:
-    needs: test       # 需要先跑自动化测试
+    needs: test       # 需要先跑自动化 测试
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     

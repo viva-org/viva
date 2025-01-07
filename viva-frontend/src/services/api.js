@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useUserStore } from '@/stores/user';
 
-const API_URL = 'http://localhost:8000';
+const API_URL = 'http://43.134.93.160:8000';
 
 const api = axios.create({
   baseURL: API_URL,

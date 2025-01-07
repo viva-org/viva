@@ -8,6 +8,7 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true
 });
 
 // 添加请求拦截器来设置 JWT token，以后所有的请求都带了能表示用户身份的 token
@@ -89,18 +90,26 @@ export default {
 
   // 验证 Google Token
   verifyGoogleToken(token) {
-    return api.post('/auth/google-login', { token })
-      .then(response => {
-        // 存储 JWT token
-        if (response.data.token) {
-          localStorage.setItem('jwt_token', response.data.token);
-        }
-        return response.data;
-      })
-      .catch(error => {
-        console.error('Google token verification failed:', error);
-        throw error;
-      });
+    return api.post('/auth/google-login', 
+      { token },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        // 确保包含凭证
+        withCredentials: true
+      }
+    )
+    .then(response => {
+      if (response.data.token) {
+        localStorage.setItem('jwt_token', response.data.token);
+      }
+      return response.data;
+    })
+    .catch(error => {
+      console.error('Google token verification failed:', error);
+      throw error;
+    });
   },
 
   // 获取用户信息

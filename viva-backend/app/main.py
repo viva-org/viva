@@ -28,10 +28,16 @@ app = FastAPI(title="Vocabulary Management API")
 # CORS 中间件配置
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:8000",  # 开发环境
+        "http://43.134.93.160:8000",  # Vite 默认端口
+        "https://viva.liugongzi.org",  # 生产环境域名
+    ],
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["Content-Type", "Authorization", "Accept"],
+    expose_headers=["*"],
+    max_age=3600,  # 预检请求的缓存时间
 )
 
 # 修改依赖注入配置

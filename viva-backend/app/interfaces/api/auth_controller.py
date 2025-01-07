@@ -1,6 +1,7 @@
 import os
 from fastapi import APIRouter, Depends, HTTPException
 from google.oauth2 import id_token
+import logging
 from google.auth.transport import requests as google_requests
 from pydantic import BaseModel
 from infrastructure.repositories.user_repository import UserRepository
@@ -9,6 +10,9 @@ from interfaces.service.jwt_service import generate_jwt
 
 
 router = APIRouter()
+# 获取 logger
+logger = logging.getLogger(__name__)
+
 
 # 替换为您的 Google Client ID
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
@@ -71,8 +75,15 @@ async def google_login(
             'user': user_entity.dict()
         }
     except ValueError as e:
-        print('Google token 验证失败或用户操作失败', e)
-        raise HTTPException(status_code=400, detail="Invalid Google token or user operation failed")
+        logger.error(f"Google token verification failed: {str(e)}", exc_info=True)
+        raise HTTPException(
+            status_code=400, 
+            detail=f"Invalid Google token or user operation failed: {str(e)}"
+        )
     except Exception as e:
-        print('登录过程中发生错误', e)
-        raise HTTPException(status_code=500, detail="Internal server error during login process")
+        logger.error(f"Login process error: {str(e)}", exc_info=True)
+        logger.error("Full error details:", exc_info=True)
+        raise HTTPException(
+            status_code=500, 
+            detail=f"Internal server error during login process: {str(e)}"
+        )

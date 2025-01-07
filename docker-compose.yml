@@ -29,7 +29,7 @@ services:
       - "8000:8000"
     environment:
       - NODE_ENV=${NODE_ENV:-production}
-      - # 使用宿主机的内部IP 172.17.0.1
+      # 使用宿主机的内部IP 172.17.0.1
       - DATABASE_URL=postgresql://root:root@172.17.0.1:5432/root
     networks:
       - viva-network

@@ -1,12 +1,13 @@
 import axios from 'axios';
 import { useUserStore } from '@/stores/user';
 
-const API_URL = 'http://43.134.93.160:8000';
+const API_URL = 'https://viva.liugongzi.org/api';
 
 const api = axios.create({
   baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
+    'Accept': 'application/json',
   },
   withCredentials: true
 });
@@ -95,21 +96,9 @@ export default {
       {
         headers: {
           'Content-Type': 'application/json',
-        },
-        // 确保包含凭证
-        withCredentials: true
+        }
       }
-    )
-    .then(response => {
-      if (response.data.token) {
-        localStorage.setItem('jwt_token', response.data.token);
-      }
-      return response.data;
-    })
-    .catch(error => {
-      console.error('Google token verification failed:', error);
-      throw error;
-    });
+    );
   },
 
   // 获取用户信息

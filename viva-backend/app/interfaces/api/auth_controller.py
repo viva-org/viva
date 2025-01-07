@@ -1,5 +1,5 @@
 import os
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Response
 from google.oauth2 import id_token
 import logging
 from google.auth.transport import requests as google_requests
@@ -29,8 +29,13 @@ class User(BaseModel):
 @router.post("/auth/google-login")
 async def google_login(
     request: GoogleLoginRequest,
+    response: Response,
     user_repo: UserRepository = Depends(UserRepository)
 ):
+    # 添加响应头
+    response.headers["Access-Control-Allow-Credentials"] = "true"
+    response.headers["Access-Control-Allow-Origin"] = request.headers.get("Origin", "*")
+    
     try:
         idinfo = id_token.verify_oauth2_token(request.token, google_requests.Request(), GOOGLE_CLIENT_ID)
         google_id = idinfo['sub']

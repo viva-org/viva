@@ -34,7 +34,6 @@ async def google_login(
 ):
     # 添加响应头
     response.headers["Access-Control-Allow-Credentials"] = "true"
-    response.headers["Access-Control-Allow-Origin"] = request.headers.get("Origin", "*")
     
     try:
         idinfo = id_token.verify_oauth2_token(request.token, google_requests.Request(), GOOGLE_CLIENT_ID)
@@ -73,7 +72,7 @@ async def google_login(
         
         # 生成 JWT
         token = generate_jwt(user_entity.dict())
-
+        logger.info(f"登录成功，生成 JWT 成功，用户 ID: {user_entity.id}")
         return {
             'message': '登录成功',
             'token': token,

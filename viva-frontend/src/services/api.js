@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useUserStore } from '@/stores/user';
 
 const API_URL = 'https://viva.liugongzi.org/api';
-
+//const API_URL = 'http://localhost:8000';
 const api = axios.create({
   baseURL: API_URL,
   headers: {

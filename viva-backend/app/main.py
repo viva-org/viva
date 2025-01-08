@@ -1,3 +1,8 @@
+from infrastructure.logging.logging_config import setup_logging
+
+# 设置日志
+logger = setup_logging()
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -17,11 +22,9 @@ from infrastructure.repositories.sentence_repository import SentenceRepository
 from infrastructure.text_processing.segmentation_service import SegmentationService
 from infrastructure.repositories.essay_repository import EssayRepository
 from infrastructure.repositories.active_mapping_repository import ActiveMappingRepository
-from infrastructure.logging.logging_config import setup_logging
 
 
-# 设置日志
-logger = setup_logging()
+
 
 app = FastAPI(title="Vocabulary Management API")
 

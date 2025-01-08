@@ -10,7 +10,15 @@ def setup_logging(log_level=numeric_level):
     try:
         print(f"Setting up logging with level: {log_level}")  # 调试信息
         
-        log_dir = '/app/logs'
+        # 修改为使用相对路径或环境变量配置的路径
+        log_dir = os.getenv('LOG_DIR', 'logs')  # 默认在当前目录下的 logs 文件夹
+        
+        # 使用绝对路径
+        if not os.path.isabs(log_dir):
+            # 获取当前项目根目录
+            project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+            log_dir = os.path.join(project_root, log_dir)
+        
         if not os.path.exists(log_dir):
             os.makedirs(log_dir)
             print(f"Created log directory: {log_dir}")

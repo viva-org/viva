@@ -25,6 +25,7 @@ services:
     image: louisleonard/viva-backend:${TAG:-latest}
     volumes:
       - ./viva-backend/.env:/app/.env  # 把.env里的api key 挂载进容器中,因为这些 key 无法通过 github 传送
+      - ./viva-backend/logs:/app/logs  # 添加这行来持久化日志
     ports:
       - "8000:8000"
     environment:

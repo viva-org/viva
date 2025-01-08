@@ -91,14 +91,18 @@ export default {
 
   // 验证 Google Token
   verifyGoogleToken(token) {
-    return api.post('/auth/google-login', 
-      { token },
-      {
-        headers: {
-          'Content-Type': 'application/json',
+    return api.post('/auth/google-login', { token })
+      .then(response => {
+        // 存储 JWT token
+        if (response.data.token) {
+          localStorage.setItem('jwt_token', response.data.token);
         }
-      }
-    );
+        return response.data;
+      })
+      .catch(error => {
+        console.error('Google token verification failed:', error);
+        throw error;
+      });
   },
 
   // 获取用户信息

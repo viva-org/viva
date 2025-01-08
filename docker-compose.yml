@@ -19,7 +19,7 @@ services:
       context: ./viva-backend
       dockerfile: Dockerfile
       args:
-        DOCKER_BUILDKIT: 1  # 启用 BuildKit 以提升构建性能
+        DOCKER_BUILDKIT: 1  # 启用 BuildKit 以提升构建性能, 这个缓存使用的硬盘空间非常恐怖,记得清理
       # 可选：添加构建超时
       # timeout: 1800
     image: louisleonard/viva-backend:${TAG:-latest}

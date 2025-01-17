@@ -72,7 +72,7 @@ jobs:
           username: ${{ secrets.SERVER_B_USERNAME }}
           password: ${{ secrets.SERVER_B_PASSWORD }}
           source: "docker-compose.yml,viva-backend/,viva-frontend/"  # 包含所有需要的文件
-          target: "/home/lighthouse/viva"
+          target: "/home/viva.liugongzi.org/viva"
           strip_components: 0
 
       # 3. SSH 部署
@@ -84,7 +84,7 @@ jobs:
           password: ${{ secrets.SERVER_B_PASSWORD }}
           script: |
             echo "Starting deployment..."
-            cd /home/lighthouse/viva
+            cd /home/viva.liugongzi.org/viva
             
             # 强制重新构建后端容器
             echo "Rebuilding backend container..."

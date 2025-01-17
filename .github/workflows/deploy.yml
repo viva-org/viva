@@ -20,6 +20,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 30  # 增加超时时间
+    environment: prod  # 指定使用 production 环境
     
     steps:
       - name: Checkout code
@@ -86,6 +87,73 @@ jobs:
             echo "Starting deployment..."
             cd /home/viva.liugongzi.org/viva
             
+            # 设置目录权限
+            echo "Setting directory permissions..."
+            sudo chown -R $USER:$USER .
+            sudo chmod -R 755 .
+            
+            # 确保日志目录存在并设置权限
+            echo "Setting up log directory..."
+            mkdir -p viva-backend/logs
+            sudo chmod -R 777 viva-backend/logs
+            
+            # 创建并设置 .env 文件
+            echo "Creating .env file..."
+            cat > viva-backend/.env << EOL
+            
+            # 用户登录
+            GOOGLE_CLIENT_ID="${{ vars.GOOGLE_CLIENT_ID }}"
+            JWT_ALGORITHM="${{ vars.JWT_ALGORITHM }}"
+            JWT_SECRET="${{ vars.JWT_SECRET }}"
+
+            # 阿里云OSS
+            OSS_ACCESS_KEY_ID="${{ vars.OSS_ACCESS_KEY_ID }}"
+            OSS_ACCESS_KEY_SECRET="${{ vars.OSS_ACCESS_KEY_SECRET }}"
+            BUCKET_NAME="${{ vars.OSS_BUCKET_NAME }}"
+            ENDPOINT="${{ vars.OSS_ENDPOINT }}"
+
+            # Elevenlabs
+            ELEVENLABS_API_KEY="${{ vars.ELEVENLABS_API_KEY }}"
+            ELEVENLABS_MODEL="${{ vars.ELEVENLABS_MODEL }}"
+
+            # PostgreSQL
+            DATABASE_URL="${{ vars.DATABASE_URL }}"
+            DB_HOST="${{ vars.DB_HOST }}"
+            DB_PORT="${{ vars.DB_PORT }}"
+            DB_USER="${{ vars.DB_USER }}"
+            DB_PASSWORD="${{ vars.DB_PASSWORD }}"
+            DB_DBNAME="${{ vars.DB_DBNAME }}"
+
+            # OpenAI
+            OPENAI_API_KEY="${{ vars.OPENAI_API_KEY }}"
+            LLM_MODEL_NAME_FOR_BASIC_CHAT="${{ vars.LLM_MODEL_NAME_FOR_BASIC_CHAT }}"
+
+            # 日志级别
+            LOG_LEVEL="${{ vars.LOG_LEVEL }}"
+            LLM_MODEL_TYPE="${{ vars.LLM_MODEL_TYPE }}"
+
+            # Prompt 文件路径
+            SEGMENT_PROMPT_FILE1="app/prompt/segment_prompt1.txt"
+            SEGMENT_PROMPT_FILE2="app/prompt/segment_prompt2.txt"
+            SEGMENT_PROMPT_FILE3="app/prompt/segment_prompt3.txt"
+            SEGMENT_PROMPT_FILE4="app/prompt/segment_prompt4.txt"
+            WORDNET_PROMPT_FILE1="app/prompt/wordnet_prompt1.txt"
+            EOL
+            
+            # 设置 .env 文件权限
+            chmod 600 viva-backend/.env
+            
+            # 确保 Docker 相关目录权限正确
+            echo "Setting Docker directory permissions..."
+            sudo chown -R $USER:docker .
+            
+            # 确保 SSL 目录权限正确（如果存在）
+            if [ -d "ssl" ]; then
+              echo "Setting SSL directory permissions..."
+              sudo chmod -R 755 ssl
+              sudo chown -R $USER:$USER ssl
+            fi
+            
             # 强制重新构建后端容器
             echo "Rebuilding backend container..."
             docker-compose build --no-cache backend
@@ -98,17 +166,13 @@ jobs:
             echo "Starting new containers..."
             docker-compose up -d
             
-            # 检查后端容器日志
-            echo "Checking backend logs..."
-            docker logs viva-backend-1
+            # 等待容器启动
+            echo "Waiting for containers to start..."
+            sleep 10
             
-            echo "Deployment completed" 
-
-      - name: Build and deploy
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SERVER_B_HOST }}
-          username: ${{ secrets.SERVER_B_USERNAME }}
-          password: ${{ secrets.SERVER_B_PASSWORD }}
-          script_stop: true  # 添加这行确保脚本出错时停止
-          command_timeout: 30m  # 增加命令超时时间 
+            # 检查容器状态和权限
+            echo "Checking container status and permissions..."
+            docker ps -a
+            docker-compose logs
+            
+            echo "Deployment completed"

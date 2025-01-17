@@ -15,10 +15,10 @@ class OssAgent:
         # 正确设置相对于当前文件的路径
         dotenv_path = os.path.join(os.path.dirname(__file__), '..', '.env')
         load_dotenv(dotenv_path)
-        self.access_key_id = os.getenv('ACCESS_KEY_ID')
-        self.access_key_secret = os.getenv('ACCESS_KEY_SECRET')
-        self.bucket_name = os.getenv('BUCKET_NAME')
-        self.endpoint = os.getenv('ENDPOINT')
+        self.access_key_id = os.getenv('OSS_ACCESS_KEY_ID')
+        self.access_key_secret = os.getenv('OSS_ACCESS_KEY_SECRET')
+        self.bucket_name = os.getenv('OSS_BUCKET_NAME')
+        self.endpoint = os.getenv('OSS_ENDPOINT')
         # 初始化认证信息
         auth = oss2.Auth(self.access_key_id, self.access_key_secret)
         # 初始化Bucket

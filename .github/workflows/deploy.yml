@@ -99,8 +99,11 @@ jobs:
             
             # 创建并设置 .env 文件
             echo "Creating .env file..."
-            cat > viva-backend/.env << EOL
+            # 确保目录存在
+            mkdir -p viva-backend
             
+            # 使用单引号来避免变量展开问题
+            cat << 'EOL' > viva-backend/.env
             # 用户登录
             GOOGLE_CLIENT_ID="${{ vars.GOOGLE_CLIENT_ID }}"
             JWT_ALGORITHM="${{ vars.JWT_ALGORITHM }}"

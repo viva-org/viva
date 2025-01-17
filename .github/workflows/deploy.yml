@@ -55,7 +55,7 @@ jobs:
           username: ${{ secrets.SERVER_B_USERNAME }}
           password: ${{ secrets.SERVER_B_PASSWORD }}
           source: "docker-compose.yml,ssl/,viva-frontend/nginx.conf"
-          target: "/home/your-username/viva"
+          target: "/home/viva.liugongzi.org/viva"
           strip_components: 0
 
       # 1. 先检查工作目录内容

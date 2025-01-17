@@ -49,34 +49,30 @@ jobs:
           docker-compose build
           docker-compose push
 
-      - name: Copy docker-compose and config files
+      # 只保留一次 scp，将需要的所有文件一次性上传
+      - name: Copy all project files to server
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SERVER_B_HOST }}
           username: ${{ secrets.SERVER_B_USERNAME }}
           password: ${{ secrets.SERVER_B_PASSWORD }}
-          source: "docker-compose.yml,ssl/,viva-frontend/nginx.conf"
+          # 合并原先两个 step 的 source
+          source: |
+            docker-compose.yml,
+            ssl/,
+            viva-frontend/nginx.conf,
+            viva-frontend/,
+            viva-backend/
           target: "/home/viva.liugongzi.org/viva"
           strip_components: 0
 
-      # 1. 先检查工作目录内容
+      # 可选：列出工作目录内容（本地）
       - name: List workspace contents
         run: |
           echo "Workspace contents:"
           ls -la
           
-      # 2. 复制文件到服务器
-      - name: Copy project files
-        uses: appleboy/scp-action@master  # scp-action代表能复制文件到服务器
-        with:
-          host: ${{ secrets.SERVER_B_HOST }}
-          username: ${{ secrets.SERVER_B_USERNAME }}
-          password: ${{ secrets.SERVER_B_PASSWORD }}
-          source: "docker-compose.yml,viva-backend/,viva-frontend/"  # 包含所有需要的文件
-          target: "/home/viva.liugongzi.org/viva"
-          strip_components: 0
-
-      # 3. SSH 部署
+      # SSH 部署
       - name: Deploy to Server B
         uses: appleboy/ssh-action@master   # ssh-action代表能上服务器做操作
         with:
@@ -97,51 +93,55 @@ jobs:
             mkdir -p viva-backend/logs
             sudo chmod -R 777 viva-backend/logs
             
-            # 创建并设置 .env 文件
+            # (可选) 如果想彻底防止追加，先删除 .env
+            # rm -f viva-backend/.env
+
+            # 创建并写入 .env 文件（首行使用 '>'，后续行使用 '>>'）
             echo "Creating .env file..."
-            # 确保目录存在
             mkdir -p viva-backend
+            echo '# 用户登录' > viva-backend/.env
+            echo 'GOOGLE_CLIENT_ID="${{ vars.GOOGLE_CLIENT_ID }}"' >> viva-backend/.env
+            echo 'JWT_ALGORITHM="${{ vars.JWT_ALGORITHM }}"' >> viva-backend/.env
+            echo 'JWT_SECRET="${{ vars.JWT_SECRET }}"' >> viva-backend/.env
             
-            # 使用单引号来避免变量展开问题
-            cat << 'EOL' > viva-backend/.env
-            # 用户登录
-            GOOGLE_CLIENT_ID="${{ vars.GOOGLE_CLIENT_ID }}"
-            JWT_ALGORITHM="${{ vars.JWT_ALGORITHM }}"
-            JWT_SECRET="${{ vars.JWT_SECRET }}"
+            echo '' >> viva-backend/.env
+            echo '# 阿里云OSS' >> viva-backend/.env
+            echo 'OSS_ACCESS_KEY_ID="${{ vars.OSS_ACCESS_KEY_ID }}"' >> viva-backend/.env
+            echo 'OSS_ACCESS_KEY_SECRET="${{ vars.OSS_ACCESS_KEY_SECRET }}"' >> viva-backend/.env
+            echo 'BUCKET_NAME="${{ vars.OSS_BUCKET_NAME }}"' >> viva-backend/.env
+            echo 'ENDPOINT="${{ vars.OSS_ENDPOINT }}"' >> viva-backend/.env
 
-            # 阿里云OSS
-            OSS_ACCESS_KEY_ID="${{ vars.OSS_ACCESS_KEY_ID }}"
-            OSS_ACCESS_KEY_SECRET="${{ vars.OSS_ACCESS_KEY_SECRET }}"
-            BUCKET_NAME="${{ vars.OSS_BUCKET_NAME }}"
-            ENDPOINT="${{ vars.OSS_ENDPOINT }}"
+            echo '' >> viva-backend/.env
+            echo '# Elevenlabs' >> viva-backend/.env
+            echo 'ELEVENLABS_API_KEY="${{ vars.ELEVENLABS_API_KEY }}"' >> viva-backend/.env
+            echo 'ELEVENLABS_MODEL="${{ vars.ELEVENLABS_MODEL }}"' >> viva-backend/.env
 
-            # Elevenlabs
-            ELEVENLABS_API_KEY="${{ vars.ELEVENLABS_API_KEY }}"
-            ELEVENLABS_MODEL="${{ vars.ELEVENLABS_MODEL }}"
+            echo '' >> viva-backend/.env
+            echo '# PostgreSQL' >> viva-backend/.env
+            echo 'DATABASE_URL="${{ vars.DATABASE_URL }}"' >> viva-backend/.env
+            echo 'DB_HOST="${{ vars.DB_HOST }}"' >> viva-backend/.env
+            echo 'DB_PORT="${{ vars.DB_PORT }}"' >> viva-backend/.env
+            echo 'DB_USER="${{ vars.DB_USER }}"' >> viva-backend/.env
+            echo 'DB_PASSWORD="${{ vars.DB_PASSWORD }}"' >> viva-backend/.env
+            echo 'DB_DBNAME="${{ vars.DB_DBNAME }}"' >> viva-backend/.env
 
-            # PostgreSQL
-            DATABASE_URL="${{ vars.DATABASE_URL }}"
-            DB_HOST="${{ vars.DB_HOST }}"
-            DB_PORT="${{ vars.DB_PORT }}"
-            DB_USER="${{ vars.DB_USER }}"
-            DB_PASSWORD="${{ vars.DB_PASSWORD }}"
-            DB_DBNAME="${{ vars.DB_DBNAME }}"
+            echo '' >> viva-backend/.env
+            echo '# OpenAI' >> viva-backend/.env
+            echo 'OPENAI_API_KEY="${{ vars.OPENAI_API_KEY }}"' >> viva-backend/.env
+            echo 'LLM_MODEL_NAME_FOR_BASIC_CHAT="${{ vars.LLM_MODEL_NAME_FOR_BASIC_CHAT }}"' >> viva-backend/.env
 
-            # OpenAI
-            OPENAI_API_KEY="${{ vars.OPENAI_API_KEY }}"
-            LLM_MODEL_NAME_FOR_BASIC_CHAT="${{ vars.LLM_MODEL_NAME_FOR_BASIC_CHAT }}"
+            echo '' >> viva-backend/.env
+            echo '# 日志级别' >> viva-backend/.env
+            echo 'LOG_LEVEL="${{ vars.LOG_LEVEL }}"' >> viva-backend/.env
+            echo 'LLM_MODEL_TYPE="${{ vars.LLM_MODEL_TYPE }}"' >> viva-backend/.env
 
-            # 日志级别
-            LOG_LEVEL="${{ vars.LOG_LEVEL }}"
-            LLM_MODEL_TYPE="${{ vars.LLM_MODEL_TYPE }}"
-
-            # Prompt 文件路径
-            SEGMENT_PROMPT_FILE1="app/prompt/segment_prompt1.txt"
-            SEGMENT_PROMPT_FILE2="app/prompt/segment_prompt2.txt"
-            SEGMENT_PROMPT_FILE3="app/prompt/segment_prompt3.txt"
-            SEGMENT_PROMPT_FILE4="app/prompt/segment_prompt4.txt"
-            WORDNET_PROMPT_FILE1="app/prompt/wordnet_prompt1.txt"
-            EOL
+            echo '' >> viva-backend/.env
+            echo '# Prompt 文件路径' >> viva-backend/.env
+            echo 'SEGMENT_PROMPT_FILE1="app/prompt/segment_prompt1.txt"' >> viva-backend/.env
+            echo 'SEGMENT_PROMPT_FILE2="app/prompt/segment_prompt2.txt"' >> viva-backend/.env
+            echo 'SEGMENT_PROMPT_FILE3="app/prompt/segment_prompt3.txt"' >> viva-backend/.env
+            echo 'SEGMENT_PROMPT_FILE4="app/prompt/segment_prompt4.txt"' >> viva-backend/.env
+            echo 'WORDNET_PROMPT_FILE1="app/prompt/wordnet_prompt1.txt"' >> viva-backend/.env
             
             # 设置 .env 文件权限
             chmod 600 viva-backend/.env

@@ -17,6 +17,7 @@
                     @enter-pressed="handleEnterPressed"
                     @focus="handleFocus"
                     @add-to-anki="handleAddToAnki"
+                    @add-to-review="handleAddToReview"
                 />
             </div>
         </div>
@@ -24,7 +25,7 @@
 </template>
 
 <script setup>
-import { computed, ref, provide, onMounted, nextTick, watch } from 'vue';
+import {computed, nextTick, onMounted, provide, ref} from 'vue';
 import MappingGridCard from '@/components/essay/MappingGridCard.vue';
 import api from '@/services/api';
 
@@ -197,6 +198,11 @@ const processedSentence = computed(() => {
 const handleAddToAnki = (mapping) => {
     console.log(`Adding to Anki: ${mapping.focus_word}`);
     api.addWordToAnki(sentence.value.sentence, mapping.focus_word, mapping.translation, mapping.ai_review.ai_review_expression.replace(/[{}]/g, ''))
+};
+
+const handleAddToReview = (mapping) => {
+    console.log(`Adding to Review: ${mapping.focus_word}`);
+    api.addWordToReview(mapping.ai_review.ai_review_expression.replace(/[{}]/g, ''), mapping.translation, mapping.focus_word, sentence.value.sentence)
 };
 
 // Provide focusedWord to child components

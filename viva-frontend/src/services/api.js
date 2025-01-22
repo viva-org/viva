@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { useUserStore } from '@/stores/user';
+import {useUserStore} from '@/stores/user';
 
-const API_URL = 'https://viva.liugongzi.org/api';
-//const API_URL = 'http://localhost:8000';
+//const API_URL = 'https://viva.liugongzi.org/api';
+const API_URL = 'http://localhost:8000';
 const api = axios.create({
   baseURL: API_URL,
   headers: {
@@ -115,4 +115,38 @@ export default {
     return api.post('/mapping/addToAnki', { sentence, mapping_chinese, mapping_wrong_english, mapping_correct_english });
   },
   // 可以添加更多 API 调用方法...
+
+  // 添加单词复习
+  addWordToReview(word, wrong_word, translation, example_sentence) {
+    console.log('addWordToReview', word, wrong_word, translation, example_sentence);
+    return api.post('/word', { word, wrong_word, translation, example_sentence });
+  },
+
+  getWordReviewCount() {
+    return api.get('/word/review/count');
+  },
+
+  getWordReviewList() {
+    return api.get('/word/review/list');
+  },
+
+  getWordReviewInfo(word_id) {
+    return api.get(`/word/review/${word_id}`);
+  },
+
+  putWordReview(id, quality) {
+    return api.put('/word', { id, quality });
+  },
+
+  postWordReviewKnow(id, is_know) {
+    return api.post('/word/known', { id, is_know });
+  },
+
+  getReviewStat() {
+    return api.get(`/word/review/stat`);
+  },
+
+  getReviewDayStat(start_date, end_date) {
+    return api.get(`/word/review/dayStat?start_date=${start_date}&end_date=${end_date}`);
+  }
 };

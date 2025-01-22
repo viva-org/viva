@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
 
 const routes = [
   // 第一类型的布局
@@ -11,9 +11,18 @@ const routes = [
         path: '',
         name: 'essay-list',
         component: () => import('@/views/essay/EssayList.vue'),
-        meta: { 
+        meta: {
           layout: 'main',
-          requiresAuth: false 
+          requiresAuth: false
+        }
+      },
+      {
+        path: '/review',
+        name: 'review-main',
+        component: () => import('@/views/review/ReviewMain.vue'),
+        meta: {
+          layout: 'main',
+          requiresAuth: true
         }
       },
       // ... 其他需要主布局的路由

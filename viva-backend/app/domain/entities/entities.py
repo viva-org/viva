@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Optional, List
-from sqlalchemy import Column, Integer, String, DateTime, Boolean, ForeignKey, Text
+from sqlalchemy import Integer, String, DateTime, Boolean, ForeignKey, Text, Float
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.sql import func
@@ -103,3 +103,35 @@ class ActiveMapping(Base):
     is_deleted: Mapped[bool] = mapped_column(Boolean, default=False)
 
     sentence: Mapped["Sentence"] = relationship("Sentence", back_populates="active_mappings")
+
+
+class WordReview(Base):
+    __tablename__ = 'word_review'
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    word: Mapped[str] = mapped_column(String(255), nullable=True)
+    wrong_word: Mapped[str] = mapped_column(String(255), nullable=True)
+    translation: Mapped[str] = mapped_column(Text, nullable=True)
+    example_sentence: Mapped[str] = mapped_column(Text, nullable=True)
+    user_id: Mapped[Optional[str]] = mapped_column(String(255), ForeignKey('users.google_id'))
+    easiness: Mapped[float] = mapped_column(Float, nullable=True)
+    interval: Mapped[int] = mapped_column(Integer, nullable=True)
+    repetitions: Mapped[int] = mapped_column(Integer, nullable=True)
+    review_datetime: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    is_know: Mapped[bool] = mapped_column(Boolean, default=False)
+    is_deleted: Mapped[bool] = mapped_column(Boolean, default=False)
+    create_time: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    update_time: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
+
+
+class WordReviewLog(Base):
+    __tablename__ = 'word_review_log'
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    word_id: Mapped[int] = mapped_column(Integer, nullable=True)
+    user_id: Mapped[Optional[str]] = mapped_column(String(255), ForeignKey('users.google_id'))
+    easiness: Mapped[float] = mapped_column(Float, nullable=True)
+    interval: Mapped[int] = mapped_column(Integer, nullable=True)
+    repetitions: Mapped[int] = mapped_column(Integer, nullable=True)
+    review_datetime: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    create_time: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())

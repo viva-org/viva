@@ -51,13 +51,13 @@
           </div>
           
           <!-- 卡片背面 -->
-          <div 
-            class="mapping-card-back card-face"
-            @click="handleAddToAnki(mapping, index)"
-          >
-            <div class="back-content"> 
-                <span>{{ mapping.isAddedToAnki ? '已添加到Anki' : '点击加入Anki' }}</span>
-            </div>
+          <div class="mapping-card-back card-face">
+            <button @click="handleAddToAnki(mapping, index)" :disabled="mapping.isAddedToAnki" class="mapping-button">
+              {{ mapping.isAddedToAnki ? '已添加到Anki' : '加入Anki' }}
+            </button>
+            <button @click="handleAddToReview(mapping, index)" :disabled="mapping.isAddedToReview" class="mapping-button">
+              {{ mapping.isAddedToReview ? '已添加到单词本' : '加入单词本' }}
+            </button>
           </div>
         </div>
       </div>
@@ -65,9 +65,7 @@
 </template>
 
 <script setup>
-import { ref, inject, computed, watch, nextTick } from 'vue'
-import { ElMessage } from 'element-plus'
-import api from "@/services/api";
+import {computed, inject, ref, watch} from 'vue'
 
 // Props 定义
 const props = defineProps({
@@ -91,6 +89,7 @@ const emit = defineEmits([
   'enter-pressed', 
   'focus', 
   'add-to-anki', 
+  'add-to-review',
   'update-mapping'
 ]);
 
@@ -161,6 +160,15 @@ const handleAddToAnki = (mapping, index) => {
   flippedStates.value[index] = false;
   // 更新mapping的状态
   mapping.isAddedToAnki = true;
+};
+
+const handleAddToReview = (mapping, index) => {
+  console.log(mapping);
+  emit('add-to-review', mapping);
+  // 添加成功后，确保卡片回到正面
+  flippedStates.value[index] = false;
+  // 更新mapping的状态
+  mapping.isAddedToReview = true;
 };
 
 // 添加一个辅助函数来处理答案字符串
@@ -306,6 +314,10 @@ watch(inputs, (newVal) => {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  padding: 20px; /* 增加内边距 */
+  border-radius: 8px; /* 圆角 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 阴影效果 */
 }
 
 .correct .mapping-card-front {
@@ -632,6 +644,36 @@ watch(inputs, (newVal) => {
 
   .incorrect .mapping-card-front {
     background-color: #e74c3c; /* 深红色 */
+  }
+
+  .mapping-button {
+    padding: 10px 20px; /* 按钮内边距 */
+    font-size: 16px; /* 按钮字体大小 */
+    border: none; /* 去掉默认边框 */
+    border-radius: 5px; /* 圆角 */
+    cursor: pointer; /* 鼠标悬停时显示为指针 */
+    transition: background-color 0.3s; /* 背景颜色过渡效果 */
+    width: 100%; /* 按钮宽度占满父容器 */
+    text-align: center; /* 文字居中 */
+    margin-bottom: 10px; /* 按钮之间的间距 */
+  }
+
+  .mapping-button:last-child {
+    margin-bottom: 0; /* 最后一个按钮没有底部间距 */
+  }
+
+  .mapping-button:disabled {
+    background-color: #ccc; /* 禁用状态下的背景颜色 */
+    cursor: not-allowed; /* 禁用状态下的鼠标样式 */
+  }
+
+  .mapping-button:not(:disabled) {
+    background-color: #ffffff; /* 正常状态下的背景颜色 */
+    color: #007aff; /* 正常状态下的文字颜色 */
+  }
+
+  .mapping-button:not(:disabled):hover {
+    background-color: #e0e0e0; /* 悬停状态下的背景颜色 */
   }
 }
 </style>

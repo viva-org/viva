@@ -5,7 +5,7 @@
       <ul>
 
         <li>
-          <router-link to="/" class="active">
+          <router-link to="/" active-class="active">
             <i class="mdi mdi-home"></i> 刻意练习
           </router-link>
         </li>
@@ -18,6 +18,11 @@
           <a href="#">
             <i class="mdi mdi-chart-line"></i> 学习进度
           </a>
+        </li>
+        <li>
+          <router-link to="/review" active-class="active">
+            <i class="mdi mdi-chart-line"></i> 单词复习
+          </router-link>
         </li>
         <li>
           <a href="#">

@@ -1,9 +1,12 @@
 import os
 from contextlib import contextmanager
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, scoped_session
-from sqlalchemy.pool import QueuePool
+from typing import Generator
+
 from dotenv import load_dotenv
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, scoped_session, Session
+from sqlalchemy.pool import QueuePool
+
 
 class DatabaseManager:
     _instance = None  # 用于实现单例模式
@@ -42,3 +45,15 @@ class DatabaseManager:
 
 # 创建 DatabaseManager 的全局实例
 db_manager = DatabaseManager()
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=db_manager.engine)
+
+def get_db() -> Generator[Session, None, None]:
+    db = SessionLocal()
+    try:
+        yield db
+        db.commit()
+    except Exception as e:
+        db.rollback()
+        raise e
+    finally:
+        db.close()

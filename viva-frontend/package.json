@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "axios": "^1.7.7",
+    "cal-heatmap": "^4.2.4",
     "element-plus": "^2.8.3",
     "jwt-decode": "^4.0.0",
     "pinia": "^2.2.2",

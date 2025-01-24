@@ -1,6 +1,5 @@
 import os
 from dotenv import load_dotenv
-from langchain_openai import ChatOpenAI
 from nltk.corpus import wordnet as wn
 from typing import List, Dict, Any
 from collections import defaultdict
@@ -13,6 +12,7 @@ from pydantic import Field
 from pydantic import BaseModel
 import json
 
+from infrastructure.text.llm_agent import LLMAgent
 load_dotenv()
 
 
@@ -40,8 +40,7 @@ class WordNetService:
     }
     _lemmatizer = WordNetLemmatizer()
     _stemmer = PorterStemmer()
-    _llm = ChatOpenAI(model = os.getenv("LLM_MODEL_NAME_FOR_BASIC_CHAT")
-                                     , temperature=0.4, openai_api_key=os.getenv("OPENAI_API_KEY")) 
+    _chat_agent = LLMAgent(model_type="openrouter")
     _parser1 = PydanticOutputParser(pydantic_object=ChooseSynsetOutput)
     
     
@@ -133,9 +132,8 @@ class WordNetService:
         if not prompt_file:
             raise ValueError("SEGMENT_PROMPT_FILE is not set in environment variables.")
         
-        with open(prompt_file, "r") as file:
+        with open(prompt_file, "r", encoding='utf-8') as file:
             prompt_template = file.read()
-        prompt = ChatPromptTemplate.from_template(prompt_template)
 
         # 将 synsets 信息转换为字符串
         synsets_str = json.dumps([
@@ -149,16 +147,19 @@ class WordNetService:
 
         print("synsets_str: ", synsets_str)  # 用于调试
         
-        messages = prompt.format_messages(
+        prompt_template = open(prompt_file, "r", encoding='utf-8').read()
+        messages = prompt_template.format(
             word=word,
             context=context,
             synsets=str(synsets_str),
             format_instructions=WordNetService._parser1.get_format_instructions()
         )
-
+        llm_response = ""
         try:
-            llm_response = WordNetService._llm.invoke(messages)
-            output = WordNetService._parser1.parse(llm_response.content)
+            print(f"messages: {messages}")
+            llm_response = WordNetService._chat_agent.chat(messages)
+            print(f"LLM response: {llm_response}")
+            output = WordNetService._parser1.parse(llm_response)
             synonyms = set()
             print("output: ", output)
             for synset in output.synsets:

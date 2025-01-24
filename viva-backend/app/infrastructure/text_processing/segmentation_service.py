@@ -78,9 +78,7 @@ class WordTransformationResult(BaseModel):
 class SegmentationService:
 
     def __init__(self):
-        self.chat_agent = LLMAgent()
-        self.llm = ChatOpenAI(model = os.getenv("LLM_MODEL_NAME_FOR_BASIC_CHAT")
-                                     , temperature=0, openai_api_key=os.getenv("OPENAI_API_KEY")) 
+        self.chat_agent = LLMAgent(model_type="openrouter")
         self.parser2 = PydanticOutputParser(pydantic_object=SegmentationResult)
         self.parser3 = PydanticOutputParser(pydantic_object=FinalSegmentationResult)
         self.parser4 = PydanticOutputParser(pydantic_object=WordTransformationResult)
@@ -119,10 +117,10 @@ class SegmentationService:
         prompt_file = os.getenv("SEGMENT_PROMPT_FILE1")
         if not prompt_file:
             raise ValueError("SEGMENT_PROMPT_FILE is not set in environment variables.")
-        prompt = open(prompt_file, "r").read()
+        prompt = open(prompt_file, "r", encoding='utf-8').read()
         prompt = prompt.replace("{sentence}", sentence)
         response = self.chat_agent.chat(prompt)
-        logger.error(f"Segment phase1 LLM original response: {response}")
+        logger.info(f"Segment phase1 LLM original response: {response}")
         return response
 
     def _fill_chinese_segment(self, process1_result) -> SegmentationResult:
@@ -133,20 +131,18 @@ class SegmentationService:
         if not prompt_file:
             raise ValueError("SEGMENT_PROMPT_FILE is not set in environment variables.")
         
-        with open(prompt_file, "r") as file:
+        with open(prompt_file, "r", encoding='utf-8') as file:
             prompt_template = file.read()
 
-        prompt = ChatPromptTemplate.from_template(prompt_template)
-
-        messages = prompt.format_messages(
+        prompt = prompt_template.format(
             process1_result=str(process1_result),
             format_instructions=self.parser2.get_format_instructions()
         )
 
         try:
-            output = self.llm(messages)
-            logger.error(f"Segment phase2 LLM original response: {output.content}")
-            result = self.parser2.parse(output.content)
+            output = self.chat_agent.chat(prompt)
+            logger.error(f"Segment phase2 LLM original response: {output}")
+            result = self.parser2.parse(output)
             logger.info(f"Successfully parsed result: {result}")
 
             return result
@@ -161,18 +157,16 @@ class SegmentationService:
         prompt_file = os.getenv("SEGMENT_PROMPT_FILE3")
         if not prompt_file:
             raise ValueError("SEGMENT_PROMPT_FILE3 is not set in environment variables.")
-        prompt_template = open(prompt_file, "r").read()
-        prompt = ChatPromptTemplate.from_template(prompt_template)
-
-        messages = prompt.format_messages(
+        prompt_template = open(prompt_file, "r", encoding='utf-8').read()
+        prompt = prompt_template.format(
             process2_result=str(process2_result),
             format_instructions=self.parser3.get_format_instructions()
         )
 
         try:
-            output = self.llm(messages)
-            logger.error(f"Segment phase3 LLM original response: {output.content}")
-            result = self.parser3.parse(output.content)
+            output = self.chat_agent.chat(prompt)
+            logger.info(f"Segment phase3 LLM original response: {output}")
+            result = self.parser3.parse(output)
             logger.info(f"Successfully parsed result: {result}")
             return result
         except Exception as e:
@@ -236,18 +230,17 @@ class SegmentationService:
         prompt_file = os.getenv("SEGMENT_PROMPT_FILE4")
         if not prompt_file:
             raise ValueError("SEGMENT_PROMPT_FILE4 is not set in environment variables.")
-        prompt_template = open(prompt_file, "r").read()
-        prompt = ChatPromptTemplate.from_template(prompt_template)
+        prompt_template = open(prompt_file, "r", encoding='utf-8').read()
 
-        messages = prompt.format_messages(
-            ref_word_lemma=word_lemma, 
-            ref_word_transformation=word_transformation, 
+        prompt = prompt_template.format(
+            ref_word_lemma=word_lemma,
+            ref_word_transformation=word_transformation,
             words=synonyms,
             format_instructions=self.parser4.get_format_instructions()
         )
         try:    
-            output = self.llm.invoke(messages)
-            result = self.parser4.parse(output.content)
+            output = self.chat_agent.chat(prompt)
+            result = self.parser4.parse(output)
             return result.words_transformation
         except Exception as e:
             logger.error(f"Error in transforming synonyms form: {str(e)}")

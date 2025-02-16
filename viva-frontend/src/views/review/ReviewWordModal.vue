@@ -1,39 +1,41 @@
 <template>
   <div class="modal-overlay" @click.self="$emit('close')">
     <div class="modal-content">
-      <button class="close-button" @click="$emit('close')">×</button>
-      <div class="practice-content">
-        <div class="content-wrapper">
-          <div class="page-button left" @click="prevWord" v-show="currentWordIndex > 0"
-               :class="{ 'button-disabled': currentWordIndex === 0 }">
-            <el-icon>
-              <ArrowLeft/>
-            </el-icon>
+      <div class="content-wrapper">
+        <div class="review-card" :key="currentWordIndex">
+          <div class="context-section">
+            <p v-html="highlightedContext"></p>
           </div>
-          <div class="sentence-container">
-            <p><strong>单词:</strong> {{ currentWord.word }}</p>
-            <p><strong>释义:</strong> {{ currentWord.translation }}</p>
-            <p><strong>例句:</strong> {{ currentWord.example_sentence }}</p>
+          <div class="translation-section">
+            <p>笔记: {{ currentWord.incorrect_translation }}</p>
           </div>
-          <div class="rating">
-            <label v-for="(level, index) in ratingLevels" :key="index">
-              <input type="radio" v-model="selectedLevel" :value="level.value"/>
-              {{ level.label }}
-            </label>
-          </div>
-          <button @click="submitRating">提交掌握程度</button>
-          <button v-if="!currentWord.is_know" @click="setKnow">标记熟知</button>
-          <div class="page-button right" @click="nextWord" v-show="currentWordIndex < wordReviewList.length - 1"
-               :class="{ 'button-disabled': currentWordIndex === wordReviewList.length - 1 }">
-            <el-icon>
-              <ArrowRight/>
-            </el-icon>
-          </div>
-          <div class="bottom-controls">
-            <div class="pagination-container">
-              <div class="pagination-info">
-                {{ currentWordIndex + 1 }} / {{ wordReviewList.length }}
+          <div class="input-section">
+            <input 
+              type="text" 
+              v-model="userTranslation" 
+              placeholder="输入正确的翻译"
+              class="translation-input"
+              :disabled="showAnswer"
+              @keyup.enter="handleShowAnswer"
+            />
+            <div v-if="showAnswer" class="answer-section">
+              <div class="correct-answer">
+                正确答案: {{ currentWord.correct_translation }}
               </div>
+              <div class="memory-buttons">
+                <button 
+                  v-for="level in memoryLevels" 
+                  :key="level.value"
+                  :class="['memory-button', level.class]"
+                  @click="handleMemoryLevel(level.value)"
+                >
+                  {{ level.label }}
+                  <span class="time-hint">{{ level.timeHint }}</span>
+                </button>
+              </div>
+            </div>
+            <div v-else class="action-section">
+              <button class="show-answer-button" @click="handleShowAnswer">Show Answer</button>
             </div>
           </div>
         </div>
@@ -43,117 +45,126 @@
 </template>
 
 <script setup>
-import {onMounted, ref} from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import api from '@/services/api';
-import {ArrowLeft, ArrowRight} from '@element-plus/icons-vue';
-import {ElMessageBox} from "element-plus";
 
 const emit = defineEmits(['close']);
 
 const wordReviewList = ref([]);
 const currentWordIndex = ref(0);
 const currentWord = ref({});
-const selectedLevel = ref(null);
+const userTranslation = ref('');
+const showAnswer = ref(false);
+const cardPosition = ref(0);
 
+// Memory level definitions
+const memoryLevels = [
+  { label: 'Again', value: 0, timeHint: '<10m', class: 'again' },
+  { label: 'Hard', value: 1, timeHint: '<15m', class: 'hard' },
+  { label: 'Good', value: 2, timeHint: '1d', class: 'good' },
+  { label: 'Easy', value: 3, timeHint: '2d', class: 'easy' }
+];
 
-const ratingLevels = [
-  {label: '完全不认识', value: 0},
-  {label: '略有印象', value: 1},
-  {label: '基本了解', value: 2},
-  {label: '较为熟悉', value: 3},
-  {label: '非常熟悉', value: 4},
-  {label: '完全掌握', value: 5},
+// Mock data for word review list
+const mockWordReviewList = [
+  {
+    id: 1,
+    word: "推进",
+    context: "配合年度目标（身体、知识、财务等）的稳步的推进，你对个人知识沉淀与项目复盘都在逐步形成高内聚的体系化内容。",
+    incorrect_translation: "improvement",
+    correct_translation: "advancement, promotion, propulsion",
+    is_know: false
+  },
+  {
+    id: 2,
+    word: "paradigm",
+    context: "This new teaching paradigm has completely transformed how we approach education in the digital age.",
+    incorrect_translation: "模仿",
+    correct_translation: "范例，模式，典范",
+    is_know: false
+  },
+  {
+    id: 3,
+    word: "leverage",
+    context: "We need to leverage our existing resources to maximize the project's impact.",
+    incorrect_translation: "平衡",
+    correct_translation: "利用，充分发挥",
+    is_know: false
+  }
 ];
 
 const getWordReviewListData = async () => {
   try {
-    const response = await api.getWordReviewList()
-    const data = response.data;
-    if (data.status !== 0) {
-      throw new Error('Failed to fetch word review list');
-    }
-    console.log('wordReviewList:', data.data)
-    wordReviewList.value = data.data
-    // 初始化 currentWord
+    wordReviewList.value = mockWordReviewList;
     if (wordReviewList.value.length > 0) {
       currentWord.value = wordReviewList.value[currentWordIndex.value];
-    } else {
-      console.log('wordReviewList is empty');
-      ElMessageBox.alert('今日没有单词要复习', '提示', {
-        confirmButtonText: '确定',
-        callback: () => {
-          emit('close');
-        }
-      });
     }
-    return data.data;
+    return mockWordReviewList;
   } catch (error) {
     console.error('Error fetching word review list:', error);
   }
 };
 
 onMounted(() => {
-  console.log("open ReviewWordModal")
-  getWordReviewListData()
-})
+  getWordReviewListData();
+});
 
-const nextWord = async () => {
-  if (currentWordIndex.value < wordReviewList.value.length - 1) {
-    currentWordIndex.value++;
-    currentWord.value = wordReviewList.value[currentWordIndex.value]
+const handleShowAnswer = () => {
+  if (userTranslation.value.trim() === '') {
+    return;
   }
+  showAnswer.value = true;
 };
 
-const prevWord = async () => {
-  if (currentWordIndex.value > 0) {
-    currentWordIndex.value--;
-    currentWord.value = wordReviewList.value[currentWordIndex.value]
-  }
-};
+const answerStatus = computed(() => {
+  if (!showAnswer.value) return '';
+  return isAnswerCorrect.value ? 'correct' : 'incorrect';
+});
 
-const submitRating = () => {
-  if (selectedLevel.value !== null) {
-    console.log(`单词 "${currentWord.value.word}" 的掌握程度为 ${selectedLevel.value}`);
-    updateWordReview(currentWord.value.id, selectedLevel.value)
-    nextWord(); // 自动跳转到下一个单词
-  } else {
-    alert('请选择掌握程度');
-  }
-};
+const isAnswerCorrect = computed(() => {
+  const correctAnswers = currentWord.value.correct_translation.split(/[,，]/).map(s => s.trim());
+  return correctAnswers.includes(userTranslation.value.trim());
+});
 
-const setKnow = () => {
-  console.log(`单词 "${currentWord.value.word}" 的is_know为 ${currentWord.value.is_know}`);
-  updateWordReviewKnow(currentWord.value.id, !currentWord.value.is_know)
-  nextWord(); // 自动跳转到下一个单词
-};
+const cardStyle = computed(() => ({
+  transform: `translateX(${cardPosition.value}px)`,
+  transition: 'transform 0.3s ease-out'
+}));
 
-const updateWordReview = async (id, quality) => {
-  try {
-    const response = await api.putWordReview(id, quality);
-    const data = response.data;
-    console.log(data);
-    if (data.status !== 0) {
-      throw new Error('Failed to update word');
+const handleMemoryLevel = async (level) => {
+  // Here you would typically send the level to your backend
+  console.log(`Memory level selected: ${level}`);
+  
+  // Animate card sliding out
+  cardPosition.value = window.innerWidth;
+  
+  // Wait for animation to complete
+  setTimeout(() => {
+    // Move to next word
+    if (currentWordIndex.value < wordReviewList.value.length - 1) {
+      currentWordIndex.value++;
+      currentWord.value = wordReviewList.value[currentWordIndex.value];
+      // Reset states
+      userTranslation.value = '';
+      showAnswer.value = false;
+      cardPosition.value = 0;
+    } else {
+      emit('close');
     }
-    return data.data;
-  } catch (error) {
-    console.error('Error fetching word stats:', error);
-  }
+  }, 300);
 };
 
-const updateWordReviewKnow = async (id, is_know) => {
-  try {
-    const response = await api.postWordReviewKnow(id, is_know);
-    const data = response.data;
-    console.log(data);
-    if (data.status !== 0) {
-      throw new Error('Failed to update word');
-    }
-    return data.data;
-  } catch (error) {
-    console.error('Error fetching word stats:', error);
-  }
-};
+const highlightedContext = computed(() => {
+  if (!currentWord.value?.context || !currentWord.value?.word) return '';
+  
+  const word = currentWord.value.word;
+  const context = currentWord.value.context;
+  
+  return context.replace(
+    new RegExp(word, 'g'), 
+    `<span class="highlight">${word}</span>`
+  );
+});
 </script>
 
 <style scoped>
@@ -163,7 +174,7 @@ const updateWordReviewKnow = async (id, is_know) => {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(252, 252, 252, 0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -171,84 +182,13 @@ const updateWordReviewKnow = async (id, is_know) => {
 }
 
 .modal-content {
-  background-color: #ffffff;
+  background-color: var(--color-bg-white);
   width: 90%;
   max-width: 800px;
-  height: 90vh;
   border-radius: 20px;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 8px 30px rgba(42, 161, 240, 0.263);
   position: relative;
-}
-
-.close-button {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  font-size: 24px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #333333;
-}
-
-.essay-content h2 {
-  font-size: 28px;
-  color: #333333;
-  margin: 0 0 16px;
-}
-
-.essay-content p {
-  background-color: #f8f9fa;
-  padding: 16px;
-  border-radius: 8px;
-  font-size: 16px;
-  line-height: 1.6;
-  color: #495057;
-  overflow-wrap: break-word; /* 确保长单词也能换行 */
-}
-
-.page-control-bar :deep(.el-button) {
-  margin: 0;
-  height: 32px;
-  font-size: 14px;
-}
-
-.pagination-info {
-  padding: 6px 12px;
-  background-color: rgba(0, 0, 0, 0.04);
-  border-radius: 8px;
-  font-size: 14px;
-  color: #606266;
-  min-width: 60px;
-  text-align: center;
-}
-
-/* 深色模式支持 */
-@media (prefers-color-scheme: dark) {
-
-  .pagination-info {
-    background-color: rgba(255, 255, 255, 0.08);
-    color: #e0e0e0;
-  }
-}
-
-/* 移动端适配 */
-@media (max-width: 768px) {
-  .pagination-info {
-    padding: 4px 8px;
-    font-size: 13px;
-  }
-}
-
-.practice-content {
-  flex: 1;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding: 20px;
 }
 
 .content-wrapper {
@@ -259,149 +199,275 @@ const updateWordReviewKnow = async (id, is_know) => {
   align-items: center;
 }
 
-.sentence-container {
-  flex: 1;
-  flex-direction: column;
-  background-color: #FAFBFC;
-  border-radius: 20px;
-  margin: 0 auto;
-  min-width: 600px;
-  min-height: 500px;
-  border: 1px solid rgba(226, 232, 240, 0.8);
-  transition: all 0.3s ease;
-}
-
-.pagination-info {
-  padding: 10px;
-  background-color: #f0f0f0;
-  text-align: center;
-  border-top: 1px solid #ddd;
-  font-size: 14px;
-}
-
-.page-button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 40px;
-  height: 80px;
+.review-card {
+  background-color: var(--color-bg-white);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 100%;
+  min-height: 400px;
   display: flex;
+  flex-direction: column;
+}
+
+.context-section {
+  background-color: #f8f9fa;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.translation-section {
+  background-color: #eff6ff;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.input-section {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  position: relative;
+}
+
+.translation-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #dcdfe6;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: white;
+  margin-bottom: 16px;
+}
+
+.action-section {
+  margin-top: auto;
+  padding: 20px 0;
+}
+
+.answer-section {
+  margin-top: auto;
+  padding: 20px 0;
+}
+
+.show-answer-button {
+  width: 100%;
+  background-color: var(--color-button-dark);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.correct-answer {
+  background-color: rgba(76, 175, 80, 0.1);
+  color: #4CAF50;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.memory-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  background-color: transparent;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.memory-button {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-radius: 20px;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-}
-
-.page-button:hover {
-  background-color: rgba(255, 255, 255, 0.95);
-  transform: translateY(-50%) scale(1.02);
-}
-
-.page-button.left {
-  left: 16px;
-}
-
-.page-button.right {
-  right: 16px;
-}
-
-.page-button :deep(.el-icon) {
-  font-size: 20px;
-  color: #1d1d1f;
-}
-
-.bottom-controls {
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 80px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 24px;
-  background: linear-gradient(to bottom, transparent, rgba(248, 248, 248, 0.95) 40%);
-}
-
-.pagination-container {
-  position: absolute;
-  bottom: 24px;
-  right: 24px;
-  z-index: 20;
-}
-
-.pagination-info {
-  background-color: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  padding: 8px 16px;
-  border-radius: 15px;
-  font-size: 14px;
-  color: #1d1d1f;
+  transition: all 0.2s ease;
   font-weight: 500;
-  letter-spacing: 0.5px;
+  background-color: var(--color-bg-white);
 }
 
-/* 深色模式 */
+.memory-button .time-hint {
+  font-size: 0.8rem;
+  opacity: 0.7;
+  margin-top: 4px;
+}
+
+.memory-button.again {
+  color: #ef5350;
+  border-color: #ef5350;
+}
+
+.memory-button.hard {
+  color: #FFC107;
+  border-color: #FFC107;
+}
+
+.memory-button.good {
+  color: #4CAF50;
+  border-color: #4CAF50;
+}
+
+.memory-button.easy {
+  color: #2196F3;
+  border-color: #2196F3;
+}
+
+.memory-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.memory-button.again:hover {
+  background-color: #fff5f5;
+}
+
+.memory-button.hard:hover {
+  background-color: #fffbeb;
+}
+
+.memory-button.good:hover {
+  background-color: #f0fdf4;
+}
+
+.memory-button.easy:hover {
+  background-color: #f0f9ff;
+}
+
+.highlight {
+  background-color: #e6f4ff;
+  color: #1890ff;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+  padding: 5px;
+  z-index: 1;
+}
+
+/* Dark mode styles */
 @media (prefers-color-scheme: dark) {
-  .content-wrapper {
-    background-color: #1c1c1e;
+  .modal-content {
+    background-color: var(--color-bg-white);
   }
 
-  .sentence-container {
-    background-color: #1A1C1E;
-    border-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1),
-    0 10px 20px rgba(0, 0, 0, 0.15);
+  .review-card {
+    background-color: var(--color-bg-white);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   }
 
-  .page-button {
-    background-color: rgba(50, 50, 50, 0.9);
+  .context-section {
+    background-color: #f8f9fa;
+    color: var(--color-text-primary);
   }
 
-  .page-button:hover {
-    background-color: rgba(60, 60, 60, 0.95);
+  .translation-section {
+    background-color: #eff6ff;
+    color: var(--color-text-primary);
   }
 
-  .page-button :deep(.el-icon) {
-    color: #ffffff;
+  .translation-input {
+    background-color: #2c2c2e;
+    border-color: #4a4a4a;
+    color: white;
   }
 
-  .bottom-controls {
-    background: linear-gradient(to bottom, transparent, rgba(28, 28, 30, 0.95) 40%);
+  .correct-answer {
+    background-color: rgba(76, 175, 80, 0.2);
   }
 
-  .pagination-info {
-    background-color: rgba(50, 50, 50, 0.9);
-    color: #ffffff;
+  .highlight {
+    background-color: rgba(24, 144, 255, 0.15);
+    color: #40a9ff;
+  }
+
+  .close-button {
+    color: #999;
+  }
+
+  .memory-buttons {
+    background-color: transparent;
+  }
+
+  .memory-button {
+    background-color: var(--color-bg-white);
+    border-color: #e0e0e0;
+    color: var(--color-text-primary);
+  }
+
+  .memory-button .time-hint {
+    color: var(--color-text-secondary);
+  }
+
+  .memory-button:hover {
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+  }
+
+  .memory-button.again {
+    color: #ef5350;
+    border-color: #ef5350;
+  }
+
+  .memory-button.hard {
+    color: #FFC107;
+    border-color: #FFC107;
+  }
+
+  .memory-button.good {
+    color: #4CAF50;
+    border-color: #4CAF50;
+  }
+
+  .memory-button.easy {
+    color: #2196F3;
+    border-color: #2196F3;
+  }
+
+  .memory-button.again:hover {
+    background-color: rgba(239, 83, 80, 0.1);
+  }
+
+  .memory-button.hard:hover {
+    background-color: rgba(255, 193, 7, 0.1);
+  }
+
+  .memory-button.good:hover {
+    background-color: rgba(76, 175, 80, 0.1);
+  }
+
+  .memory-button.easy:hover {
+    background-color: rgba(33, 150, 243, 0.1);
   }
 }
 
-/* 移动端适配 */
+/* Mobile responsive styles */
 @media (max-width: 768px) {
-  .content-wrapper {
-    padding: 16px 48px;
+  .memory-buttons {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .page-button {
-    width: 36px;
-    height: 72px;
-  }
-
-  .bottom-controls {
-    height: 70px;
-    padding: 0 16px;
-  }
-
-
-  .pagination-info {
-    padding: 6px 12px;
-    font-size: 13px;
+  .modal-content {
+    width: 95%;
+    padding: 15px;
   }
 }
 </style>

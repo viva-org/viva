@@ -274,6 +274,8 @@ watch(inputs, (newVal) => {
 .mapping-input-item {
   perspective: 1000px; /* 开启 3D 空间 */
   position: relative;
+  width: 100%;
+  height: 160px;
 }
 
 .mapping-input-item.hover-border:hover {
@@ -285,15 +287,16 @@ watch(inputs, (newVal) => {
 .mapping-card {
   position: relative;
   width: 100%;
-  height: 160px; /* 稍微减小卡片高度 */
+  height: 100%;
   transform-style: preserve-3d;
-  transition: transform 0.6s ease, background-color 0.3s ease;
+  transition: transform 0.8s ease;
 }
 
 .card-face {
   position: absolute;
   width: 100%;
-  height: 100%; /* 使正反面高度一致 */
+  height: 100%;
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   border-radius: 8px;
   padding: 10px;
@@ -301,23 +304,23 @@ watch(inputs, (newVal) => {
 }
 
 .mapping-card-front {
-  transform: rotateX(0deg);
+  transform: rotateY(0deg);
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
 .mapping-card-back {
-  transform: rotateX(180deg);
-  background-color: #007aff;
+  transform: rotateY(180deg);
+  background-color: var(--color-primary);
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding: 20px; /* 增加内边距 */
-  border-radius: 8px; /* 圆角 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 阴影效果 */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .correct .mapping-card-front {
@@ -329,7 +332,7 @@ watch(inputs, (newVal) => {
 }
 
 .is-flipped {
-  transform: rotateX(180deg);
+  transform: rotateY(180deg);
 }
 
 .mapping-label {
@@ -386,12 +389,8 @@ watch(inputs, (newVal) => {
 }
 
 /* 添加翻转效果 */
-.flippable .mapping-card {
-  cursor: pointer;
-}
-
 .flippable .mapping-card:hover {
-  transform: rotateX(180deg);
+  transform: rotateY(180deg);
 }
 
 /* 深色模式调整 */
@@ -481,7 +480,7 @@ watch(inputs, (newVal) => {
 
 /* 禁用已添加到Anki的卡片的翻转效果 */
 .added-to-anki-front.is-flipped {
-  transform: rotateX(0deg) !important;
+  transform: rotateY(0deg) !important;
 }
 
 /* 可选：添加一个小图标或标记表示已添加状态 */
@@ -498,94 +497,6 @@ watch(inputs, (newVal) => {
 .added-to-anki-front:hover {
   transform: none;
   cursor: default;
-}
-
-/* 添加翻转效果 */
-.flippable .mapping-card {
-  cursor: pointer;
-}
-
-.flippable .mapping-card:hover {
-  transform: rotateX(180deg);
-}
-
-/* 深色模式调整 */
-@media (prefers-color-scheme: dark) {
-  .mapping-input-card {
-    background-color: #1c1c1e;
-  }
-
-  .mapping-input-card:hover {
-    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
-  }
-
-  .card-title {
-    color: #f5f5f7;
-  }
-
-  .mapping-label {
-    color: #ffffff;
-  }
-
-  .mapping-input {
-    color: #ffffff;
-    border-bottom-color: #48484a;
-  }
-
-  .no-translation {
-    color: #8e8e93;
-    border-bottom-color: #3a3a3c;
-  }
-
-  .correct .mapping-card-front {
-    background-color: #2ecc71; /* 深绿色 */
-  }
-
-  .incorrect .mapping-card-front {
-    background-color: #e74c3c; /* 深红色 */
-  }
-
-  .mapping-card-back {
-    background-color: #0a84ff;
-  }
-
-  .mapping-input-item.hover-border:hover {
-    border-color: #3a3a3c;
-  }
-}
-
-/* 覆盖上部25%的透明层 */
-.top-third-overlay {
-  position: absolute;
-  top: 0;
-  height: 25%;
-  width: 100%;
-  cursor: pointer;
-  background-color: rgba(0, 0, 0, 0); /* 透明背景 */
-}
-
-/* 添加新的样式 */
-.mapping-card-back {
-    cursor: pointer;
-}
-
-.mapping-card-back .back-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-/* 已添加状态的样式 */
-.mapping-card.added .mapping-card-back {
-    background-color: #67c23a;
-}
-
-/* 禁用状态的样式 */
-.mapping-card-back.disabled {
-    background-color: #909399;
-    cursor: not-allowed;
 }
 
 /* 重置背景色为白色 */
@@ -669,7 +580,7 @@ watch(inputs, (newVal) => {
 
   .mapping-button:not(:disabled) {
     background-color: #ffffff; /* 正常状态下的背景颜色 */
-    color: #007aff; /* 正常状态下的文字颜色 */
+    color: #008BFF; /* 正常状态下的文字颜色 */
   }
 
   .mapping-button:not(:disabled):hover {

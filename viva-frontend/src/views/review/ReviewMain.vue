@@ -2,55 +2,72 @@
   <el-container style="height: 100vh;  flex-direction: column;">
     <el-main style="flex: 1;  flex-direction: column;">
       <el-row :gutter="20" style="flex: 1; ">
-        <!-- 今日复习统计 -->
-        <el-col :span="24">
-          <el-card shadow="hover" style="margin-bottom: 20px;">
-            <div slot="header" class="clearfix">
-              <span>今日复习统计</span>
-            </div>
-            <el-row style="display: flex; flex-direction: row;">
-              <el-col :span="8">
-                <div class="stat-item"
-                     style="height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                  <h3>今日复习单词</h3>
-                  <p>{{ reviewStat.todayReviewCount }}</p>
-                </div>
-              </el-col>
-              <el-col :span="8">
-                <div class="stat-item"
-                     style="height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                  <h3>今日待复习单词</h3>
-                  <p>{{ reviewStat.todayNeedReviewCount }}</p>
-                </div>
-              </el-col>
-              <el-col :span="8">
-                <div class="stat-item"
-                     style="height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                  <h3>已熟知单词</h3>
-                  <p>{{ reviewStat.totalKnowWordReviewCount }}</p>
-                </div>
-              </el-col>
-            </el-row>
-          </el-card>
-        </el-col>
+        <!-- 顶部标签页 -->
+        <el-col :span="24" style="margin-bottom: 20px;">
+          <el-tabs v-model="activeTab" class="custom-tabs">
+            <el-tab-pane label="间隔复习" name="review">
+              <!-- 今日复习统计 -->
+              <el-card shadow="hover" style="margin-bottom: 20px;">
+                <el-row style="display: flex; flex-direction: row;">
+                  <el-col :span="8">
+                    <div class="stat-item"
+                         style="height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                      <h3>今日复习单词</h3>
+                      <p>{{ reviewStat.todayReviewCount }}</p>
+                    </div>
+                  </el-col>
+                  <el-col :span="8">
+                    <div class="stat-item"
+                         style="height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                      <h3>今日待复习单词</h3>
+                      <p>{{ reviewStat.todayNeedReviewCount }}</p>
+                    </div>
+                  </el-col>
+                  <el-col :span="8">
+                    <div class="stat-item"
+                         style="height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                      <h3>已熟知单词</h3>
+                      <p>{{ reviewStat.totalKnowWordReviewCount }}</p>
+                    </div>
+                  </el-col>
+                </el-row>
+              </el-card>
 
-        <!-- 开始学习按钮 -->
-        <el-col :span="24" style="text-align: center; margin-bottom: 20px;">
-          <el-button style="width: 60%; min-height: 50px" type="primary" @click="startLearning">开始学习</el-button>
-        </el-col>
+              <!-- 开始学习按钮 -->
+              <el-col :span="24" style="text-align: center; margin-bottom: 20px;">
+                <el-button style="background-color: #202124; border-radius: 10px; width: 60%; min-height: 50px" type="primary" @click="startLearning">Fucking the words</el-button>
+              </el-col>
 
-        <!-- 学习热力图 -->
-        <el-col :span="24">
-          <el-card shadow="hover" style="flex: 1;">
-            <div slot="header" class="clearfix">
-              <span>学习热力图</span>
-            </div>
-            <div id="heatmapContainer" style="width: 100%; height: 100%;"></div>
-            <div style="float: right; fontSize: 12 "/>
-            <span style="color: #768390">Less</span>
-            <div id="ex-ghDay-legend" style="display: inline-block; margin: 0 4px"></div>
-            <span style="color: #768390; fontSize: 12">More</span>
-          </el-card>
+              <!-- 学习热力图 -->
+              <el-col :span="24">
+                <el-card shadow="hover" style="flex: 1;">
+                  <div slot="header" class="clearfix">
+                    <span>Heatmap</span>
+                  </div>
+                  <div id="heatmapContainer" style="width: 100%; height: 100%;"></div>
+                  <div style="float: right; fontSize: 12 "/>
+                  <span style="color: #768390">Less</span>
+                  <div id="ex-ghDay-legend" style="display: inline-block; margin: 0 4px"></div>
+                  <span style="color: #768390; fontSize: 12">More</span>
+                  <div class="illustration-container">
+                    <img src="@/assets/draw/undraw_booking_1ztt.svg" alt="Booking illustration" class="illustration-image">
+                  </div>
+                </el-card>
+              </el-col>
+            </el-tab-pane>
+
+            <el-tab-pane label="词频驱动" name="progress">
+              <ReviewProgress />
+            </el-tab-pane>
+
+            <el-tab-pane label="GAP驱动" name="vocabulary">
+              <VocabularyGap />
+            </el-tab-pane>
+
+            <el-tab-pane label="场景驱动" name="scenario">
+              <ReviewProgress />
+            </el-tab-pane>
+          </el-tabs>
         </el-col>
       </el-row>
     </el-main>
@@ -69,11 +86,14 @@ import Tooltip from 'cal-heatmap/plugins/Tooltip';
 import LegendLite from 'cal-heatmap/plugins/LegendLite';
 import CalendarLabel from "cal-heatmap/plugins/CalendarLabel";
 import ReviewWordModal from "@/views/review/ReviewWordModal.vue";
+import ReviewProgress from "@/views/review/ReviewProgress.vue";
+import VocabularyGap from "@/views/review/VocabularyGap.vue";
 
 
 const route = useRoute()
 const showReviewWord = ref(false)
 const reviewStat = ref({"todayReviewCount": 0, "todayNeedReviewCount": 0, "totalKnowWordReviewCount": 0})
+const activeTab = ref('review')
 
 const fetchData = async () => {
 
@@ -256,5 +276,41 @@ const getLastYearFormattedDate = () => {
 /* 确保热力图容器有足够的高度 */
 #heatmapContainer {
   min-height: 150px; /* 根据需要调整高度 */
+}
+
+/* 自定义标签页样式 */
+.custom-tabs {
+  .el-tabs__header {
+    margin-bottom: 20px;
+  }
+  
+  .el-tabs__nav {
+    border-radius: 8px;
+  }
+
+  .el-tabs__item {
+    padding: 0 20px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    box-shadow: none;
+  }
+
+  .el-tabs__item.is-active {
+    font-weight: 600;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.illustration-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.illustration-image {
+  max-width: 300px;
+  height: auto;
 }
 </style>

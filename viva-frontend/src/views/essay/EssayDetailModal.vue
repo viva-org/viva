@@ -128,16 +128,17 @@ const handleCheckCurrentSentence = () => {
 
 <style scoped>
 .modal-overlay {
+  display: flex;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(228, 58, 58, 0.5);
-  display: flex;
+  background-color: rgba(0, 0, 0, 0.5);
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  backdrop-filter: blur(4px);
 }
 
 .modal-content {
@@ -149,7 +150,6 @@ const handleCheckCurrentSentence = () => {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 8px 30px rgba(42, 161, 240, 0.263);
   position: relative;
 }
 
@@ -200,7 +200,7 @@ const handleCheckCurrentSentence = () => {
 .start-practice-button {
   align-self: center;
   padding: 12px 24px;
-  background-color: #20BEFF;
+  background-color: var(--color-primary);
   color: #ffffff;
   border: none;
   border-radius: 8px;
@@ -305,7 +305,7 @@ const handleCheckCurrentSentence = () => {
   flex-direction: column;
   background-color: #FAFBFC;
   border-radius: 20px;
-  box-shadow: 
+  box-shadow:
     0 4px 6px rgba(0, 0, 0, 0.02),
     0 10px 20px rgba(37, 99, 235, 0.05);
   overflow: hidden;

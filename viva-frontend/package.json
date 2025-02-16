@@ -11,8 +11,10 @@
   "dependencies": {
     "axios": "^1.7.7",
     "cal-heatmap": "^4.2.4",
+    "echarts": "^5.6.0",
     "element-plus": "^2.8.3",
     "jwt-decode": "^4.0.0",
+    "normalize.css": "^8.0.1",
     "pinia": "^2.2.2",
     "vue": "^3.4.37",
     "vue-router": "^4.4.5",

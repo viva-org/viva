@@ -1,43 +1,25 @@
 <template>
   <div class="modal-overlay" @click.self="$emit('close')">
     <div class="modal-content">
-      <div class="add-essay">
-        <h2 class="title">新建想法</h2>
-        <div class="essay-form">
-          <div class="user-info">
-            <img :src="userAvatar" alt="User Avatar" class="avatar">
-            <span class="username">{{ username }}</span>
+      <div class="modal-header">
+        <h2>新想法</h2>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <div class="input-container">
+            <label class="form-label">Essay</label>
+            <textarea 
+              v-model="content"
+              class="form-input"
+              placeholder="把你的想法粘贴在这里，想法是不分语言的，给我一个中文想法，LEXICON AI 会帮你塑造你的英文能力，
+Attention is all you need！"
+            ></textarea>
           </div>
-          <textarea
-            v-model="content"
-            placeholder="写写串文..."
-            class="essay-content"
-          ></textarea>
-          <div class="action-buttons">
-            <label for="image-upload" class="action-btn">
-              <i class="icon">🖼️</i>
-              <input 
-                id="image-upload" 
-                type="file" 
-                @change="handleImageUpload" 
-                accept="image/*" 
-                style="display: none;"
-              >
-            </label>
-            <button class="action-btn"><i class="icon">GIF</i></button>
-            <button class="action-btn"><i class="icon">#</i></button>
-            <button class="action-btn"><i class="icon">≡</i></button>
-          </div>
-          <div v-if="imagePreview" class="image-preview">
-            <img :src="imagePreview" alt="Image Preview" />
-            <button @click="removeImage" class="remove-image">×</button>
-          </div>
-          <div class="visibility-option">
-            <span class="visibility-icon">👤</span>
-            <span>Post 你的世界观，稍后用英语再表达一次！</span>
-          </div>
-          <button @click="submitEssay" class="submit-btn">发布</button>
         </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" @click="$emit('close')">Cancel</button>
+        <button @click="submitEssay" class="btn-create">Create</button>
       </div>
     </div>
   </div>
@@ -51,34 +33,11 @@ export default {
   name: 'AddEssay',
   setup(props, { emit }) {
     const content = ref('');
-    const image = ref(null);
-    const imagePreview = ref(null);
-    const userAvatar = ref('path/to/default/avatar.png'); // 替换为实际的用户头像路径
-    const username = ref('luisleonard75'); // 替换为实际的用户名
-
-    const handleImageUpload = (event) => {
-      const file = event.target.files[0];
-      if (file) {
-        image.value = file;
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          imagePreview.value = e.target.result;
-        };
-        reader.readAsDataURL(file);
-      }
-    };
-
-    const removeImage = () => {
-      image.value = null;
-      imagePreview.value = null;
-    };
 
     const submitEssay = async () => {
       try {
-        await api.submitEssay(content.value, image.value);
+        await api.submitEssay(content.value);
         content.value = '';
-        image.value = null;
-        imagePreview.value = null;
         emit('close');
         emit('essay-published');
       } catch (error) {
@@ -88,11 +47,6 @@ export default {
 
     return {
       content,
-      userAvatar,
-      username,
-      imagePreview,
-      handleImageUpload,
-      removeImage,
       submitEssay
     };
   }
@@ -115,77 +69,117 @@ export default {
 
 .modal-content {
   background-color: white;
-  border-radius: 16px;
-  padding: 20px;
-  max-width: 600px;
-  width: 90%;
-  max-height: 90vh;
-  overflow-y: auto;
+  border-radius: 8px;
+  width: 550px;
+  max-width: 90vw;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.add-essay {
+.modal-header {
+  padding: 24px 24px 16px;
+  background: transparent;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 400;
+  color: #202124;
+}
+
+.modal-body {
+  padding: 24px;
+  background: transparent;
+}
+
+.form-group {
+  position: relative;
+}
+
+.input-container {
+  position: relative;
+}
+
+.form-label {
+  position: absolute;
+  top: -6px;
+  left: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #202124;
+  background-color: white;
+  padding: 0 4px;
+  z-index: 1;
+  text-transform: uppercase;
+}
+
+.form-input {
   width: 100%;
-}
-
-.title {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-.essay-form {
-  display: flex;
-  flex-direction: column;
-}
-
-.user-info {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-.username {
-  font-weight: bold;
-}
-
-.essay-content {
-  width: 100%;
-  height: 150px;
-  border: none;
-  resize: none;
+  height: 120px;
+  padding: 12px;
   font-size: 16px;
-  margin-bottom: 15px;
+  border: 2px solid #202124;
+  border-radius: 4px;
+  color: #202124;
+  background: transparent;
+  transition: all 0.2s;
+  box-sizing: border-box;
+  resize: none;
+  line-height: 1.5;
 }
 
-.action-buttons {
+.form-input:focus {
+  outline: none;
+  border-color: #202124;
+  box-shadow: 0 0 0 1px #202124;
+}
+
+.form-input::placeholder {
+  color: #5f6368;
+}
+
+.modal-footer {
+  padding: 16px 24px;
   display: flex;
-  margin-bottom: 15px;
+  justify-content: flex-end;
+  gap: 12px;
+  background: transparent;
 }
 
-.action-btn {
+.btn-cancel {
+  padding: 8px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #202124;
   background: none;
   border: none;
-  font-size: 20px;
-  margin-right: 15px;
+  border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.2s;
 }
 
-.visibility-option {
-  display: flex;
-  align-items: center;
+.btn-cancel:hover {
+  background-color: rgba(32, 33, 36, 0.04);
+}
+
+.btn-create {
+  padding: 8px 24px;
   font-size: 14px;
-  color: #555;
-  margin-bottom: 15px;
+  font-weight: 500;
+  color: white;
+  background-color: #202124;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
-.visibility-icon {
-  margin-right: 5px;
+.btn-create:hover {
+  background-color: #000000;
+}
+
+.btn-create:disabled {
+  background-color: #dadce0;
+  cursor: not-allowed;
 }
 </style>

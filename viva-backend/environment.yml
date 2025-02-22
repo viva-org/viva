@@ -39,3 +39,4 @@ dependencies:
               - PyJWT
               - google-auth
               - google-auth-oauthlib
+              - supermemo2

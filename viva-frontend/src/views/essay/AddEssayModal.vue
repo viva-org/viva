@@ -11,7 +11,7 @@
             <textarea 
               v-model="content"
               class="form-input"
-              placeholder="把你的想法粘贴在这里，想法是不分语言的，给我一个中文想法，LEXICON AI 会帮你塑造你的英文能力，
+              placeholder="把你的想法粘贴在这里，想法是不分语言的，给我一个中文想法，AI 会帮你塑造你的英文能力，
 Attention is all you need！"
             ></textarea>
           </div>

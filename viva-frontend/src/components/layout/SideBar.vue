@@ -2,7 +2,7 @@
   <nav class="sidebar">
     <div class="sidebar-content">
       <div class="logo">
-        <img src="/logo.png" alt="Lexicon Logo">
+        <img src="/logo.png" alt="DejaVu Logo">
       </div>
       <ul class="nav-list">
         <li>

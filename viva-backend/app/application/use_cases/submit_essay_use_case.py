@@ -3,7 +3,7 @@
 from typing import Optional
 from fastapi import UploadFile
 from domain.entities.entities import Essay
-from domain.services.essay_processing_service import EssayProcessingService
+from domain.services.essay_processing_service import EssayService
 from domain.services.tts_service import slugify
 from infrastructure.oss.AliOssAgent import OssAgent
 from infrastructure.repositories.essay_repository import EssayRepository
@@ -19,7 +19,7 @@ import os
 
 class SubmitEssayUseCase:
     def __init__(self, 
-                 essay_processing_service: EssayProcessingService, 
+                 essay_processing_service: EssayService, 
                  essay_repository: EssayRepository,
                  mapping_card_repository: ActiveMappingRepository
                  #task_queue: TaskQueue

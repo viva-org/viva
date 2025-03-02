@@ -22,6 +22,7 @@
           }"
           @mouseenter="props.showResults && !mapping.isAddedToAnki && hoverCard(index)"
           @mouseleave="props.showResults && !mapping.isAddedToAnki && leaveCard(index)"
+          tabindex="-1"
         >
           <!-- 卡片正面 -->
           <div class="mapping-card-front card-face">
@@ -34,6 +35,7 @@
               :value="inputs[mapping.focus_word] || ''"
               @input="updateInput(mapping.focus_word, $event.target.value)"
               @keydown.enter.prevent="handleEnterKey(index)"
+              @keydown.tab="handleTabKey($event, index)"
               @focus="handleFocus(mapping.focus_word)"
               @blur="handleBlur"
               :class="{ 
@@ -45,17 +47,17 @@
             />
 
             <!-- 显示 AI 检查不通过的错误信息 -->
-            <div v-if="props.showResults" class="error-message">
+            <div v-if="props.showResults" class="error-message" tabindex="-1">
                {{ mapping.ai_review.ai_review_expression.replace(/[{}]/g, '') }}
             </div>
           </div>
           
           <!-- 卡片背面 -->
-          <div class="mapping-card-back card-face">
-            <button @click="handleAddToAnki(mapping, index)" :disabled="mapping.isAddedToAnki" class="mapping-button">
+          <div class="mapping-card-back card-face" tabindex="-1">
+            <button @click="handleAddToAnki(mapping, index)" :disabled="mapping.isAddedToAnki" class="mapping-button" tabindex="-1">
               {{ mapping.isAddedToAnki ? '已添加到Anki' : '加入Anki' }}
             </button>
-            <button @click="handleAddToReview(mapping, index)" :disabled="mapping.isAddedToReview" class="mapping-button">
+            <button @click="handleAddToReview(mapping, index)" :disabled="mapping.isAddedToReview" class="mapping-button" tabindex="-1">
               {{ mapping.isAddedToReview ? '已添加到单词本' : '加入单词本' }}
             </button>
           </div>
@@ -246,6 +248,22 @@ const isIncorrect = (input, aiReviewExpressions) => {
 watch(inputs, (newVal) => {
   console.log('inputs changed:', newVal);
 }, { deep: true });
+
+// Add new method for handling tab key
+const handleTabKey = (event, index) => {
+  if (index < mappings.length - 1) {
+    // If not the last input, let the default tab behavior work
+    return;
+  }
+  // If it's the last input, prevent default and manually focus the first input
+  if (!event.shiftKey) {
+    event.preventDefault();
+    const firstInput = inputRefs[0];
+    if (firstInput) {
+      firstInput.focus();
+    }
+  }
+};
 </script>
 
 <style scoped>
@@ -328,7 +346,7 @@ watch(inputs, (newVal) => {
 }
 
 .incorrect .mapping-card-front {
-  background-color: #ffe0e0; /* 浅红色 */
+  background-color: var(--color-primary-light-blue);
 }
 
 .is-flipped {
@@ -357,11 +375,11 @@ watch(inputs, (newVal) => {
 
 .mapping-input:focus {
   outline: none;
-  border-bottom-color: #007aff;
+  border-bottom-color: var(--color-primary);
 }
 
 .active-input {
-  border-bottom-color: #007aff;
+  border-bottom-color: var(--color-primary);
 }
 
 .no-translation {
@@ -539,7 +557,7 @@ watch(inputs, (newVal) => {
 
 /* 错误的样式 */
 .incorrect .mapping-card-front {
-  background-color: #ffe0e0; /* 浅红色 */
+  background-color: var( --color-primary-light-blue); /* 浅红色 */
 }
 
 /* 深色模式适配 */

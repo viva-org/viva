@@ -7,6 +7,7 @@ from pydantic import BaseModel
 from infrastructure.repositories.user_repository import UserRepository
 from domain.entities.entities import User as UserEntity
 from interfaces.service.jwt_service import generate_jwt
+from fastapi.responses import JSONResponse
 
 
 router = APIRouter()

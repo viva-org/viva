@@ -249,7 +249,7 @@ provide('focusedWord', focusedWord);
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgb(255, 149, 0);
+    background-color: var(--color-primary);
     border-radius: 3px;
 }
 

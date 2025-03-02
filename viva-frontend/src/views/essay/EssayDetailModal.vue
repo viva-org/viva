@@ -372,7 +372,7 @@ const handleCheckCurrentSentence = () => {
   width: 50px !important;
   height: 50px !important;
   font-size: 22px !important;
-  background-color: #007AFF !important;
+  background-color: var(--color-primary) !important;
   border: none !important;
   box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);

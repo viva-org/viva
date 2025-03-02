@@ -1,0 +1,24 @@
+@use "variables" as *;
+@use "fonts" as *;
+
+/* Reset / Normalize */
+@use "normalize.css/normalize.css" as *;
+
+/* 下面是全局的基础样式 */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", "PingFang SC", "Microsoft YaHei", 
+               "Helvetica Neue", "Noto Sans CJK SC", sans-serif;
+  background-color: var(--color-bg-body);
+  color: var(--color-text-primary);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* 针对 h1-h6、p、a、ul、button 等进行全局样式或重置 */
+h1, h2, h3 {
+  font-weight: 700;
+  margin: 1rem 0;
+}
+
